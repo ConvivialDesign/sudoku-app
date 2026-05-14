@@ -802,19 +802,28 @@ body[data-theme="dark"] #backFromDaily:hover {
   }
 }
 
-/* Mobile Sudoku board polish */
+/* Clean mobile Sudoku board */
 @media (max-width: 600px) {
+  .board-wrapper {
+    width: 94vw;
+    max-width: 430px;
+    margin: 12px auto;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
   #board,
   .board,
   .sudoku-board,
   .sudoku-grid {
-    width: min(94vw, 420px);
-    height: min(94vw, 420px);
-    margin: 10px auto;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(9, 1fr);
-    border: 2px solid #222;
+    gap: 0;
+    background: #111;
+    border: 3px solid #111;
     box-sizing: border-box;
   }
 
@@ -830,16 +839,19 @@ body[data-theme="dark"] #backFromDaily:hover {
     height: 100%;
     min-width: 0;
     min-height: 0;
-    box-sizing: border-box;
-    text-align: center;
-    font-size: clamp(20px, 6vw, 30px);
-    line-height: 1;
     padding: 0;
     margin: 0;
-    border: 1px solid #999;
+    border: 1px solid #c9ced8;
+    border-radius: 0;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: clamp(24px, 7vw, 34px);
+    font-weight: 700;
+    line-height: 1;
+    background: #fff;
   }
 
-  /* Thicker 3x3 box lines, but not too thick on mobile */
+  /* 3x3 vertical lines */
   #board input:nth-child(3n),
   .board input:nth-child(3n),
   .sudoku-board input:nth-child(3n),
@@ -848,7 +860,7 @@ body[data-theme="dark"] #backFromDaily:hover {
   .board .cell:nth-child(3n),
   .sudoku-board .cell:nth-child(3n),
   .sudoku-grid .cell:nth-child(3n) {
-    border-right: 2px solid #222;
+    border-right: 3px solid #111;
   }
 
   #board input:nth-child(9n),
@@ -859,9 +871,10 @@ body[data-theme="dark"] #backFromDaily:hover {
   .board .cell:nth-child(9n),
   .sudoku-board .cell:nth-child(9n),
   .sudoku-grid .cell:nth-child(9n) {
-    border-right: 1px solid #999;
+    border-right: 1px solid #c9ced8;
   }
 
+  /* 3x3 horizontal lines */
   #board input:nth-child(n + 19):nth-child(-n + 27),
   #board input:nth-child(n + 46):nth-child(-n + 54),
   .board input:nth-child(n + 19):nth-child(-n + 27),
@@ -878,6 +891,6 @@ body[data-theme="dark"] #backFromDaily:hover {
   .sudoku-board .cell:nth-child(n + 46):nth-child(-n + 54),
   .sudoku-grid .cell:nth-child(n + 19):nth-child(-n + 27),
   .sudoku-grid .cell:nth-child(n + 46):nth-child(-n + 54) {
-    border-bottom: 2px solid #222;
+    border-bottom: 3px solid #111;
   }
 }
