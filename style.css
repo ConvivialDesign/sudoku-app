@@ -913,3 +913,46 @@ body[data-theme="dark"] #backFromDaily:hover {
     font-size: clamp(20px, 7vw, 34px);
   }
 }
+
+/* ===== Mobile board line fix ===== */
+@media (max-width: 600px) {
+  #board {
+    gap: 0 !important;
+    background: #ffffff !important;
+    border: 2px solid #4f79c7 !important;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  #board input,
+  #board .cell {
+    border: 0 !important;
+    border-right: 1px solid #d7ddea !important;
+    border-bottom: 1px solid #d7ddea !important;
+    border-radius: 0 !important;
+    background-clip: padding-box;
+  }
+
+  /* Blue 3x3 box lines */
+  #board input:nth-child(3n),
+  #board .cell:nth-child(3n) {
+    border-right: 1px solid #4f79c7 !important;
+  }
+
+  #board input:nth-child(9n),
+  #board .cell:nth-child(9n) {
+    border-right: 0 !important;
+  }
+
+  #board input:nth-child(n + 19):nth-child(-n + 27),
+  #board input:nth-child(n + 46):nth-child(-n + 54),
+  #board .cell:nth-child(n + 19):nth-child(-n + 27),
+  #board .cell:nth-child(n + 46):nth-child(-n + 54) {
+    border-bottom: 1px solid #4f79c7 !important;
+  }
+
+  #board input:nth-child(n + 73):nth-child(-n + 81),
+  #board .cell:nth-child(n + 73):nth-child(-n + 81) {
+    border-bottom: 0 !important;
+  }
+}
