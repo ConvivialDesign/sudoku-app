@@ -1,0 +1,599 @@
+/* ---------- GLOBAL LAYOUT ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #fdfcfb 0%, #d2fce1 50%, #d3e9ff 100%);
+  color: #222;
+}
+
+.app {
+  background: #ffffff;
+  padding: 20px 24px 24px;
+  border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+  max-width: 620px;
+  width: 100%;
+}
+
+/* ---------- Side Panel Layout ---------- */
+.main-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 8px;
+}
+
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 150px;
+}
+
+/* Reuse your nice button/select styling in the side panel */
+.side-panel button,
+.side-panel select {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #cbd2e4;
+  background: #f7f8fc;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+.side-panel button:hover:not(:disabled),
+.side-panel select:hover {
+  background: #e5ebff;
+  box-shadow: 0 2px 6px rgba(38, 82, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Mobile: stack board + controls vertically */
+@media (max-width: 640px) {
+  .main-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .side-panel {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+
+/* ---------- HEADER & STATUS ---------- */
+
+h1 {
+  margin: 0 0 12px;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.lives,
+.timer {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #f3f5fb;
+}
+
+
+/* ---------- BOARD ---------- */
+
+.board-wrapper {
+  padding: 8px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #d9e4ff, #f7f9ff);
+  display: inline-block;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  max-width: 90vw;
+  grid-template-rows: repeat(9, 44px);
+  background: #000;
+}
+
+/* If you use a cell-container wrapper */
+.cell-container {
+  position: relative;
+  width: 44px;
+  height: 44px;
+}
+
+/* The input itself */
+.cell {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #cbd2e4;
+  border-right: none;
+  border-bottom: none;
+  font-size: 1.3rem;
+  text-align: center;
+  outline: none;
+  background: #ffffff;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* 3x3 box borders (you already add these classes in JS) */
+.cell.top-border {
+  border-top: 2px solid #000;
+}
+.cell.left-border {
+  border-left: 2px solid #000;
+}
+.cell.right-border {
+  border-right: 2px solid #000;
+}
+.cell.bottom-border {
+  border-bottom: 2px solid #000;
+}
+
+/* Prefilled cells */
+.cell.prefilled {
+  background: #f3f5fb;
+  font-weight: 700;
+}
+
+/* Hover / focus */
+.cell:hover:not(.prefilled):not(.disabled) {
+  background: #f8fafc;
+}
+.cell.focused {
+  box-shadow: inset 0 0 0 2px #4c7dff;
+}
+
+/* Row/column highlight */
+.cell.highlight {
+  background: #fff8d6;
+}
+
+/* Same-number highlight (correct numbers) */
+.cell.same-number {
+  background: #ffe9a3;
+}
+
+/* Wrong, hint, disabled states */
+.cell.wrong {
+  background: #ffe4e4;
+  color: #b60000;
+}
+
+.cell.hint {
+  background: #e5f5ff;
+  color: #005a9e;
+}
+
+.cell.disabled {
+  background: #f0f0f0;
+  color: #999;
+}
+
+/* ---------- PENCIL NOTES (if you added them) ---------- */
+
+.pencil-notes {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  font-size: 0.6rem;
+  color: #777;
+  pointer-events: none;
+}
+
+/* ---------- PAUSED STATE ---------- */
+
+#board.paused {
+  filter: blur(4px);
+  opacity: 0.6;
+  pointer-events: none;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+
+/* ---------- NUMBER PAD ---------- */
+
+.number-pad {
+  margin: 14px auto 8px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.num-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid #cbd2e4;
+  background: #f7f8fc;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.num-btn:hover:not(:disabled) {
+  background: #e4ebff;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(76, 125, 255, 0.25);
+}
+
+.num-btn.selected {
+  background: #4c7dff;
+  color: #fff;
+  border-color: #3a63d5;
+  box-shadow: 0 3px 8px rgba(76, 125, 255, 0.45);
+}
+
+.num-btn.used-up,
+.num-btn:disabled {
+  background: #e4e7ef;
+  color: #999;
+  border-style: dashed;
+  cursor: default;
+  box-shadow: none;
+}
+
+/* ---------- CONTROLS ---------- */
+
+.controls {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls select {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid #cbd2e4;
+  background: #f7f8fc;
+  font-size: 0.9rem;
+}
+
+/* Generic button style */
+.controls button {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #cbd2e4;
+  background: #f7f8fc;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+.controls button:hover:not(:disabled) {
+  background: #e5ebff;
+  box-shadow: 0 2px 6px rgba(38, 82, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.controls button:disabled {
+  background: #e4e7ef;
+  color: #999;
+  cursor: default;
+}
+
+/* Pause button special state */
+#pauseResume.paused {
+  background: #ffe9a3;
+  border-color: #f1c94e;
+}
+
+/* ---------- MESSAGE ---------- */
+
+.message {
+  margin-top: 10px;
+  text-align: center;
+  min-height: 20px;
+  font-size: 0.9rem;
+}
+
+.message.success {
+  color: #14853b;
+}
+
+.message.error {
+  color: #c62828;
+}
+
+.message.info {
+  color: #2c5ac7;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 640px) {
+  .app {
+    max-width: 100%;
+    margin: 12px;
+    padding: 16px;
+  }
+
+  .board {
+    grid-template-columns: repeat(9, 1fr);
+    max-width: 90vw;
+    grid-template-rows: repeat(9, 34px);
+  }
+
+  .cell-container {
+    width: 34px;
+    height: 34px;
+  }
+
+  .num-btn {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+
+/* ---------- APP STYLING (SP) ---------- */
+/* Screens */
+.screen {
+  width: 100%;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  left: -9999px;
+}
+
+
+/* Top bar */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+/* Home screen cards */
+.home-modes {
+  display: grid;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.mode-card {
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: #fff;
+  font-size: 18px;
+  text-align: left;
+}
+
+/* Bottom tabs (home only) */
+.home-bottom-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  justify-content: space-between;
+}
+
+.home-bottom-tabs button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+}
+
+/* Side pane */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 1000;
+}
+
+.side-pane {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 85%;
+  max-width: 320px;
+  height: 100%;
+  background: #fff;
+  z-index: 1001;
+  padding: 16px;
+  box-shadow: 4px 0 14px rgba(0,0,0,0.2);
+}
+
+.side-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.side-items {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.side-item {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  text-align: left;
+  font-size: 16px;
+}
+
+.side-content {
+  margin-top: 16px;
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+
+body[data-theme="dark"] .setting-row {
+  border-bottom: 1px solid #334155;
+}
+
+
+/* =========================
+   DARK MODE (v1)
+   ========================= */
+
+body[data-theme="dark"] {
+  color: #f5f5f5;
+  background: radial-gradient(circle at top, #0b1220 0%, #0f1b2d 50%, #111827 100%);
+}
+
+/* App surfaces */
+body[data-theme="dark"] .app {
+  background: #111827;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* Pills (lives/timer) */
+body[data-theme="dark"] .lives,
+body[data-theme="dark"] .timer {
+  background: #1f2937;
+  color: #e5e7eb;
+}
+
+/* Board wrapper */
+body[data-theme="dark"] .board-wrapper {
+  background: linear-gradient(135deg, #1f2a44, #111827);
+}
+
+/* Cells */
+body[data-theme="dark"] .cell {
+  background: #0b1220;
+  color: #f3f4f6;
+  border-color: #334155;
+}
+
+body[data-theme="dark"] .cell.prefilled {
+  background: #111827;
+  color: #f9fafb;
+}
+
+/* Highlights */
+body[data-theme="dark"] .cell.highlight {
+  background: rgba(250, 204, 21, 0.18);
+}
+
+body[data-theme="dark"] .cell.same-number {
+  background: rgba(250, 204, 21, 0.28);
+}
+
+body[data-theme="dark"] .cell.focused {
+  box-shadow: inset 0 0 0 2px #60a5fa;
+}
+
+body[data-theme="dark"] .cell.wrong {
+  background: rgba(239, 68, 68, 0.22);
+  color: #fecaca;
+}
+
+body[data-theme="dark"] .cell.hint {
+  background: rgba(56, 189, 248, 0.18);
+  color: #7dd3fc;
+}
+
+body[data-theme="dark"] .cell.disabled {
+  background: #0f172a;
+  color: #9ca3af;
+}
+
+/* Buttons / selects */
+body[data-theme="dark"] .side-panel button,
+body[data-theme="dark"] .side-panel select,
+body[data-theme="dark"] .num-btn,
+body[data-theme="dark"] .controls button,
+body[data-theme="dark"] .controls select,
+body[data-theme="dark"] .mode-card,
+body[data-theme="dark"] .home-bottom-tabs button,
+body[data-theme="dark"] .side-item {
+  background: #1f2937;
+  color: #e5e7eb;
+  border-color: #334155;
+}
+
+body[data-theme="dark"] .side-panel button:hover:not(:disabled),
+body[data-theme="dark"] .side-panel select:hover,
+body[data-theme="dark"] .num-btn:hover:not(:disabled),
+body[data-theme="dark"] .controls button:hover:not(:disabled) {
+  background: #243244;
+}
+
+/* Side pane + topbar */
+body[data-theme="dark"] .side-pane {
+  background: #111827;
+  color: #f3f4f6;
+}
+
+body[data-theme="dark"] .topbar {
+  color: #f3f4f6;
+}
+
+body[data-theme="dark"] .icon-btn {
+  color: #f3f4f6;
+}
+
+.screen {
+  width: 100%;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.screen.hidden {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+}
+
+

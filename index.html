@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sudoku</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- TOP BAR (always visible) -->
+    <header class="topbar">
+      <button id="menu-btn" class="icon-btn" aria-label="Open menu">☰</button>
+      <h1 class="app-title">Sudoku</h1>
+      <button id="home-btn" class="icon-btn hidden" aria-label="Go to home">⌂</button>
+    </header>
+
+    <!-- HOME SCREEN (hidden by default for now) -->
+    <main id="screen-home" class="screen hidden">
+      <section class="home-modes">
+        <button class="mode-card" id="mode-justplay">Just Play</button>
+        <!-- later: AI difficulty functionality -->
+        <!--<button class="mode-card" id="mode-smartplay">Smart Play</button> -->
+        <button class="mode-card" id="mode-daily">Daily Challenge</button>
+      </section>
+
+      <nav class="home-bottom-tabs">
+        <button id="tab-stats">Stats</button>
+        <button id="tab-leaderboard">Leaderboard</button>
+        <button id="tab-notifications">Notifications</button>
+      </nav>
+
+      <section id="home-panel-area" class="home-panel-area">
+        <!-- later: stats/leaderboard/notifications content -->
+      </section>
+    </main>
+
+    <!-- DAILY SCREEN -->
+    <main id="dailyScreen" class="screen hidden">
+      <h2>Daily Challenge</h2>
+
+      <div class="daily-card">
+        <h3 id="dailyTodayTitle">Today</h3>
+        <p id="dailyStatus">Not completed yet</p>
+
+        <div class="daily-streaks">
+          🔥 Current streak: <span id="dailyCurrentStreak">0</span><br>
+          🏆 Best streak: <span id="dailyBestStreak">0</span>
+        </div>
+
+        <button id="startTodayDaily">Start Today’s Puzzle</button>
+      </div>
+
+      <h3>Recent Daily Challenges</h3>
+      <div id="dailyCalendar" class="daily-calendar"></div>
+
+      <button id="backFromDaily">Back</button>
+    </main>
+
+    <!-- GAME SCREEN (UI) -->
+    <main id="screen-game" class="screen">
+
+	<!-- Status bar -->
+  	<div class="status-bar">
+    		<div id="lives" class="lives">Lives: 3</div>
+    		<button id="hint" class="ui-button">Hint (3)</button>
+    		<div id="timer" class="timer">Time: 00:00</div>
+  	</div>
+
+  	<!-- Board + Side panel -->
+  	<div class="main-row">
+    		<div class="board-wrapper">
+      	<div id="board" class="board"></div>
+    	</div>
+
+     <div class="side-panel">
+          <select id="difficulty">
+        	<option value="easy">Easy</option>
+        	<option value="medium" selected>Medium</option>
+        	<option value="hard">Hard</option>
+        	<option value="expert">Expert</option>
+
+      	   </select>
+      		<button id="newPuzzle" class="ui-button">New Puzzle</button>
+      		<button id="clear" class="ui-button">Clear</button>
+      		<button id="pauseResume" class="ui-button">Pause</button>
+      		<button id="eraseCell" class="ui-button">Erase</button>
+      		<button id="pencilToggle" class="ui-button">Pencil: Off</button>
+      	 </div>
+    	</div>
+
+  	<!-- Number pad -->
+  	<div id="number-pad" class="number-pad"></div>
+
+  	<!-- Message -->
+  	<div id="message" class="message"></div>
+
+    </main>
+
+  </div>
+
+  <!-- LEFT SLIDE-IN PANE (Profile/Settings/Upgrade later) -->
+  <div id="side-overlay" class="overlay hidden"></div>
+
+  <aside id="side-pane" class="side-pane hidden" aria-label="Menu">
+    <div class="side-header">
+      <h2>Menu</h2>
+      <button id="close-pane" class="icon-btn" aria-label="Close menu">✕</button>
+    </div>
+
+    <div class="side-items">
+      <button id="nav-profile" class="side-item">Profile</button>
+      <button id="nav-settings" class="side-item">Settings</button>
+      <button id="nav-upgrade" class="side-item">Upgrade</button>
+    </div>
+
+    
+    <div id="side-content" class="side-content">
+      <!-- later: render settings/profile UI here -->
+    </div>
+  </aside>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
