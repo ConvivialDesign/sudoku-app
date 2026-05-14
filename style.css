@@ -759,3 +759,45 @@ body[data-theme="dark"] #backFromDaily:hover {
   box-shadow: 0 2px 6px rgba(38, 82, 255, 0.25);
 }
 
+/* Mobile number pad fix */
+#number-pad,
+.number-pad,
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(32px, 1fr));
+  gap: 8px;
+  width: 100%;
+  max-width: 620px;
+  margin: 12px auto 0;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+#number-pad button,
+.number-pad button,
+.numpad button,
+.num-btn {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-width: 0;
+  font-size: clamp(18px, 5vw, 28px);
+  border-radius: 10px;
+}
+
+@media (max-width: 430px) {
+  #number-pad,
+  .number-pad,
+  .numpad {
+    grid-template-columns: repeat(9, 1fr);
+    gap: 6px;
+    padding: 0 6px;
+  }
+
+  #number-pad button,
+  .number-pad button,
+  .numpad button,
+  .num-btn {
+    font-size: clamp(16px, 4.8vw, 22px);
+    border-radius: 8px;
+  }
+}
