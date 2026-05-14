@@ -1102,6 +1102,10 @@ function createBoard() {
       cellContainer.classList.add("cell-container");
 
       const cell = document.createElement("input");
+      //Keyboard fix
+      cell.readOnly = true;
+      cell.inputMode = "none";
+
       cell.type = "text";
       cell.maxLength = 1;
       cell.classList.add("cell");
