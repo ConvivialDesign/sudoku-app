@@ -802,7 +802,7 @@ body[data-theme="dark"] #backFromDaily:hover {
   }
 }
 
-/* Clean mobile Sudoku board */
+/* Cleaner mobile Sudoku board */
 @media (max-width: 600px) {
   .board-wrapper {
     width: 94vw;
@@ -812,85 +812,58 @@ body[data-theme="dark"] #backFromDaily:hover {
     box-sizing: border-box;
   }
 
-  #board,
-  .board,
-  .sudoku-board,
-  .sudoku-grid {
+  #board {
     width: 100%;
     aspect-ratio: 1 / 1;
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(9, 1fr);
     gap: 0;
-    background: #111;
-    border: 3px solid #111;
+    border: 2px solid #222;
+    background: transparent;
     box-sizing: border-box;
   }
 
   #board input,
-  .board input,
-  .sudoku-board input,
-  .sudoku-grid input,
-  #board .cell,
-  .board .cell,
-  .sudoku-board .cell,
-  .sudoku-grid .cell {
+  #board .cell {
     width: 100%;
     height: 100%;
     min-width: 0;
     min-height: 0;
     padding: 0;
     margin: 0;
-    border: 1px solid #c9ced8;
+    border: 0;
+    border-right: 1px solid #b8bec9;
+    border-bottom: 1px solid #b8bec9;
     border-radius: 0;
     box-sizing: border-box;
     text-align: center;
     font-size: clamp(24px, 7vw, 34px);
     font-weight: 700;
     line-height: 1;
-    background: #fff;
   }
 
-  /* 3x3 vertical lines */
+  /* Slightly thicker 3x3 vertical lines */
   #board input:nth-child(3n),
-  .board input:nth-child(3n),
-  .sudoku-board input:nth-child(3n),
-  .sudoku-grid input:nth-child(3n),
-  #board .cell:nth-child(3n),
-  .board .cell:nth-child(3n),
-  .sudoku-board .cell:nth-child(3n),
-  .sudoku-grid .cell:nth-child(3n) {
-    border-right: 3px solid #111;
+  #board .cell:nth-child(3n) {
+    border-right: 2px solid #222;
   }
 
   #board input:nth-child(9n),
-  .board input:nth-child(9n),
-  .sudoku-board input:nth-child(9n),
-  .sudoku-grid input:nth-child(9n),
-  #board .cell:nth-child(9n),
-  .board .cell:nth-child(9n),
-  .sudoku-board .cell:nth-child(9n),
-  .sudoku-grid .cell:nth-child(9n) {
-    border-right: 1px solid #c9ced8;
+  #board .cell:nth-child(9n) {
+    border-right: 0;
   }
 
-  /* 3x3 horizontal lines */
+  /* Slightly thicker 3x3 horizontal lines */
   #board input:nth-child(n + 19):nth-child(-n + 27),
   #board input:nth-child(n + 46):nth-child(-n + 54),
-  .board input:nth-child(n + 19):nth-child(-n + 27),
-  .board input:nth-child(n + 46):nth-child(-n + 54),
-  .sudoku-board input:nth-child(n + 19):nth-child(-n + 27),
-  .sudoku-board input:nth-child(n + 46):nth-child(-n + 54),
-  .sudoku-grid input:nth-child(n + 19):nth-child(-n + 27),
-  .sudoku-grid input:nth-child(n + 46):nth-child(-n + 54),
   #board .cell:nth-child(n + 19):nth-child(-n + 27),
-  #board .cell:nth-child(n + 46):nth-child(-n + 54),
-  .board .cell:nth-child(n + 19):nth-child(-n + 27),
-  .board .cell:nth-child(n + 46):nth-child(-n + 54),
-  .sudoku-board .cell:nth-child(n + 19):nth-child(-n + 27),
-  .sudoku-board .cell:nth-child(n + 46):nth-child(-n + 54),
-  .sudoku-grid .cell:nth-child(n + 19):nth-child(-n + 27),
-  .sudoku-grid .cell:nth-child(n + 46):nth-child(-n + 54) {
-    border-bottom: 3px solid #111;
+  #board .cell:nth-child(n + 46):nth-child(-n + 54) {
+    border-bottom: 2px solid #222;
+  }
+
+  #board input:nth-child(n + 73):nth-child(-n + 81),
+  #board .cell:nth-child(n + 73):nth-child(-n + 81) {
+    border-bottom: 0;
   }
 }
