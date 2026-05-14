@@ -914,45 +914,85 @@ body[data-theme="dark"] #backFromDaily:hover {
   }
 }
 
-/* ===== Mobile board line fix ===== */
-@media (max-width: 600px) {
-  #board {
-    gap: 0 !important;
-    background: #ffffff !important;
-    border: 2px solid #4f79c7 !important;
-    border-radius: 10px;
-    overflow: hidden;
+/* ===== Final Sudoku board line fix ===== */
+
+/* The grid itself */
+.board {
+  background: #d7ddea;
+  border: 2px solid #4f79c7;
+  border-radius: 12px;
+  overflow: hidden;
+  gap: 0;
+}
+
+/* Each grid square controls the lines */
+.cell-container {
+  width: 44px;
+  height: 44px;
+  border-right: 1px solid #d7ddea;
+  border-bottom: 1px solid #d7ddea;
+  box-sizing: border-box;
+}
+
+/* Make the input fill the full square — no inner box */
+.cell {
+  width: 100%;
+  height: 100%;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+/* 3x3 block separators — coloured, not thick black */
+.cell-container:nth-child(3n) {
+  border-right: 1.5px solid #4f79c7;
+}
+
+.cell-container:nth-child(9n) {
+  border-right: none;
+}
+
+.cell-container:nth-child(n + 19):nth-child(-n + 27),
+.cell-container:nth-child(n + 46):nth-child(-n + 54) {
+  border-bottom: 1.5px solid #4f79c7;
+}
+
+.cell-container:nth-child(n + 73):nth-child(-n + 81) {
+  border-bottom: none;
+}
+
+/* Restore highlights */
+.cell.highlight {
+  background: #fff8d6 !important;
+}
+
+.cell.same-number {
+  background: #ffe9a3 !important;
+}
+
+.cell.focused {
+  box-shadow: inset 0 0 0 2px #4c7dff !important;
+}
+
+/* Mobile scaling */
+@media (max-width: 640px) {
+  .board {
+    width: 90vw;
+    max-width: 420px;
+    aspect-ratio: 1 / 1;
+    grid-template-rows: repeat(9, 1fr);
   }
 
-  #board input,
-  #board .cell {
-    border: 0 !important;
-    border-right: 1px solid #d7ddea !important;
-    border-bottom: 1px solid #d7ddea !important;
-    border-radius: 0 !important;
-    background-clip: padding-box;
+  .cell-container {
+    width: auto;
+    height: auto;
   }
 
-  /* Blue 3x3 box lines */
-  #board input:nth-child(3n),
-  #board .cell:nth-child(3n) {
-    border-right: 1px solid #4f79c7 !important;
-  }
-
-  #board input:nth-child(9n),
-  #board .cell:nth-child(9n) {
-    border-right: 0 !important;
-  }
-
-  #board input:nth-child(n + 19):nth-child(-n + 27),
-  #board input:nth-child(n + 46):nth-child(-n + 54),
-  #board .cell:nth-child(n + 19):nth-child(-n + 27),
-  #board .cell:nth-child(n + 46):nth-child(-n + 54) {
-    border-bottom: 1px solid #4f79c7 !important;
-  }
-
-  #board input:nth-child(n + 73):nth-child(-n + 81),
-  #board .cell:nth-child(n + 73):nth-child(-n + 81) {
-    border-bottom: 0 !important;
+  .cell {
+    font-size: clamp(24px, 7vw, 34px);
   }
 }
