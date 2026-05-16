@@ -996,3 +996,48 @@ body[data-theme="dark"] #backFromDaily:hover {
     font-size: clamp(24px, 7vw, 34px);
   }
 }
+
+/* ===== Restore Sudoku cell state styling ===== */
+
+/* Original/given puzzle numbers */
+.cell.prefilled {
+  background: #f3f5fb !important;
+  color: #111 !important;
+  font-weight: 800 !important;
+}
+
+/* User-entered numbers */
+.cell:not(.prefilled) {
+  color: #0077cc !important;
+  font-weight: 700 !important;
+}
+
+/* Mistake/wrong entry */
+.cell.wrong {
+  background: #ffe4e4 !important;
+  color: #b60000 !important;
+  font-weight: 800 !important;
+  box-shadow: inset 0 0 0 2px #e53935 !important;
+}
+
+/* Hint value */
+.cell.hint {
+  background: #e5f5ff !important;
+  color: #005a9e !important;
+  font-weight: 800 !important;
+}
+
+/* Selected cell */
+.cell.focused {
+  box-shadow: inset 0 0 0 2px #4c7dff !important;
+}
+
+/* Row/column highlight */
+.cell.highlight:not(.wrong):not(.focused) {
+  background: #fff8d6 !important;
+}
+
+/* Same number highlight */
+.cell.same-number:not(.wrong):not(.focused) {
+  background: #ffe9a3 !important;
+}
