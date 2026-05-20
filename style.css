@@ -416,6 +416,12 @@ h1 {
   width: 100%;
 }
 
+/* Prevent the game/daily screens flashing before JS loads */
+#screen-game,
+#dailyScreen {
+  display: none;
+}
+
 .hidden {
   display: none !important;
 }
@@ -1040,4 +1046,22 @@ body[data-theme="dark"] #backFromDaily:hover {
 /* Same number highlight */
 .cell.same-number:not(.wrong):not(.focused) {
   background: #ffe9a3 !important;
+}
+
+/* ===== Footer Style ===== */
+.site-footer {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #667085;
+}
+
+.site-footer a {
+  color: #0077cc;
+  text-decoration: none;
+  margin: 0 6px;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
 }
