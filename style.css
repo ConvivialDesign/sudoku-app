@@ -1049,9 +1049,23 @@ body[data-theme="dark"] #backFromDaily:hover {
 }
 
 /* ===== Footer Style ===== */
+.page-shell {
+  width: 100%;
+  max-width: 680px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 0 auto;
+}
+
 .site-footer {
   margin-top: 18px;
+  margin-bottom: 24px;
+
   text-align: center;
+
   font-size: 0.85rem;
   color: #667085;
 }
