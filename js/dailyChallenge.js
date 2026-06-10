@@ -2,8 +2,18 @@ const DAILY_KEY = "sudoku_daily_challenge_v1";
 const DAILY_MODE_KEY = "sudoku_daily_mode";
 const DAILY_DATE_KEY = "sudoku_daily_date";
 
-export function getTodayKey() {
+/*export function getTodayKey() {
   return new Date().toISOString().slice(0, 10);
+}*/
+
+export function getTodayKey() {
+  const date = new Date();
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
 }
 
 export function getDailyChallengeState() {
@@ -115,10 +125,23 @@ function updateDailyStreak(state, today) {
   localStorage.setItem(streakKey, JSON.stringify(streak));
 }
 
-function getPreviousDate(dateString) {
+/*function getPreviousDate(dateString) {
   const date = new Date(dateString);
   date.setDate(date.getDate() - 1);
   return date.toISOString().slice(0, 10);
+}*/
+
+function getPreviousDate(dateString) {
+  const [year, month, day] = dateString.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+
+  date.setDate(date.getDate() - 1);
+
+  const prevYear = date.getFullYear();
+  const prevMonth = String(date.getMonth() + 1).padStart(2, "0");
+  const prevDay = String(date.getDate()).padStart(2, "0");
+
+  return `${prevYear}-${prevMonth}-${prevDay}`;
 }
 
 // Improved Product Flow
@@ -205,7 +228,11 @@ function renderDailyCalendar(state) {
     const date = new Date();
     date.setDate(date.getDate() - i);
 
-    const key = date.toISOString().slice(0, 10);
+    //const key = date.toISOString().slice(0, 10);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const dayNum = String(date.getDate()).padStart(2, "0");
+    const key = `${year}-${month}-${dayNum}`;
     const entry = state[key];
 
     const day = document.createElement("div");
