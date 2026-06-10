@@ -631,7 +631,8 @@ function registerMistake(reason = "") {
   if (lives === 0) {
     setMessage("Game over!", "error");
     // optionally pause/disable inputs
-    isPaused = true;
+    //isPaused = true;
+    gameOver();
   }
 }
 
@@ -1081,13 +1082,17 @@ function eraseCell(cell) {
 
 // ---------- GAME OVER ----------
 function gameOver() {
+   isPaused = true;
+  
+   stopTimer();
+   setBoardPaused(true);
+
+   if (pauseResumeBtn) {
+    pauseResumeBtn.disabled = true;
+    pauseResumeBtn.textContent = "Game Over";
+  }
   setMessage("Game over — out of lives.", "error");
-  stopTimer();
-  const inputs = boardEl.querySelectorAll("input.cell:not(.prefilled)");
-  inputs.forEach(inp => {
-    inp.readOnly = true;
-    inp.classList.add("disabled");
-  });
+
 }
 
 // ---------- BOARD CREATION ----------

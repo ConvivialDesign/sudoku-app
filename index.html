@@ -11,6 +11,16 @@
   gtag('config', 'G-HWD1N8H02V');
 </script>
 
+<script>
+  window.trackEvent = function(eventName, params = {}) {
+    if (typeof gtag === "function") {
+      gtag("event", eventName, params);
+    } else {
+      console.log("GA event:", eventName, params);
+    }
+  };
+</script>
+
 <head>
   <meta charset="UTF-8" />
   <title>Sudoku</title>
@@ -96,8 +106,7 @@
         	<option value="expert">Expert</option>
 
       	   </select>
-      		<button id="newPuzzle" class="ui-button">New Puzzle</button>
-      		<button id="clear" class="ui-button">Clear</button>
+      		<button id="newPuzzle" class="ui-button">New Puzzle</button>	
       		<button id="pauseResume" class="ui-button">Pause</button>
       		<button id="eraseCell" class="ui-button">Erase</button>
       		<button id="pencilToggle" class="ui-button">Pencil: Off</button>

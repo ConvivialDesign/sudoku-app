@@ -33,6 +33,37 @@ function showOnlyScreen(screenId) {
   activeScreen.classList.remove("hidden");
   activeScreen.style.display = "block";
 
+  // Analytics tracking
+  const pageData = {
+    "screen-home": {
+      title: "Home",
+      path: "/"
+    },
+    "dailyScreen": {
+      title: "Daily Challenge",
+      path: "/daily"
+    },
+    "screen-game": {
+      title: "Game",
+      path: "/game"
+    }
+  };
+
+  const page = pageData[screenId];
+
+  if (page && typeof gtag === "function") {
+    gtag("event", "page_view", {
+      page_title: page.title,
+      page_location: window.location.origin + page.path,
+      page_path: page.path
+    });
+  }
+
+  // Custom event
+  window.trackEvent?.("screen_view", {
+    screen_name: page?.title || screenId
+  });
+
   console.log("Showing:", screenId, activeScreen.className);
 }
 
