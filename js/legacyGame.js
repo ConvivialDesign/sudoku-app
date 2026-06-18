@@ -271,9 +271,9 @@ document.getElementById("newPuzzle")?.addEventListener("click", (event) => {
   const diff = document.getElementById("difficulty")?.value || "medium";
   loadGeneratedPuzzle(diff,true);
 
-  elapsedSeconds = 0;
-  renderTimer();
-  startTimer();
+  //elapsedSeconds = 0;
+  //renderTimer();
+  //startTimer();
 
   // reset pause state
   isPaused = false;
@@ -1273,7 +1273,7 @@ document.getElementById("clear")?.addEventListener("click", () => {
 
   hintsLeft = 3;
   elapsedSeconds = 0;
-  renderTimer();
+  renderTimer(elapsedSeconds);
   startTimer();
 
   // reset pencil marks
@@ -1323,7 +1323,7 @@ export function initLegacyGame() {
 
   // Timer
   elapsedSeconds = 0;
-  if (typeof renderTimer === "function") renderTimer();
+  if (typeof renderTimer === "function") renderTimer(elapsedSeconds);
   if (typeof startTimer === "function") startTimer();
 
   // Pause state
