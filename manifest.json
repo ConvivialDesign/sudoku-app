@@ -1,10 +1,10 @@
 {
-  "name": "Sudoku",
+  "name": "Sudoku Daily Play",
   "short_name": "Sudoku",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "theme_color": "#0b6e2f",
   "icons": [
     {
       "src": "icon-192.png",
