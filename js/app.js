@@ -33,6 +33,19 @@ function showOnlyScreen(screenId) {
   activeScreen.classList.remove("hidden");
   activeScreen.style.display = "block";
 
+  // Show SEO intro only on Home screen
+  const seoIntro = document.getElementById("seo-intro");
+
+  if (seoIntro) {
+    if (screenId === "screen-home") {
+      seoIntro.classList.remove("hidden");
+      seoIntro.style.display = "block";
+    } else {
+      seoIntro.classList.add("hidden");
+      seoIntro.style.display = "none";
+    }
+}
+
   // Analytics tracking
   const pageData = {
     "screen-home": {

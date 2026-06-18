@@ -1079,3 +1079,22 @@ body[data-theme="dark"] #backFromDaily:hover {
 .site-footer a:hover {
   text-decoration: underline;
 }
+
+.seo-intro {
+  max-width: 720px;
+  margin: 12px auto 18px;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.seo-intro h2 {
+  margin: 0 0 6px;
+  font-size: 1.2rem;
+}
+
+.seo-intro p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #555;
+}

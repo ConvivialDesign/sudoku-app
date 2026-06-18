@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HWD1N8H02V"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-HWD1N8H02V');
-</script>
-
-<script>
-  window.trackEvent = function(eventName, params = {}) {
-    if (typeof gtag === "function") {
-      gtag("event", eventName, params);
-    } else {
-      console.log("GA event:", eventName, params);
-    }
-  };
-</script>
-
 <head>
   <meta charset="UTF-8" />
-  <title>Sudoku</title>
+
+  <title>Sudoku Daily Play – Free Online Sudoku Puzzles</title>
+
+  <meta name="description" 
+        content="Play free Sudoku puzzles online every day. Enjoy a new Daily Challenge, track your stats, build your streak and compete on the leaderboard.">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.json">
+
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HWD1N8H02V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-HWD1N8H02V');
+  </script>
+
+  <script>
+    window.trackEvent = function(eventName, params = {}) {
+      if (typeof gtag === "function") {
+        gtag("event", eventName, params);
+      } else {
+        console.log("GA event:", eventName, params);
+      }
+    };
+  </script>
 </head>
 
 <body>
@@ -36,12 +41,20 @@
     <!-- TOP BAR (always visible) -->
     <header class="topbar">
       <button id="menu-btn" class="icon-btn" aria-label="Open menu">☰</button>
-      <h1 class="app-title">Sudoku</h1>
+      <h1 class="app-title">Sudoku Daily Play</h1>
       <button id="home-btn" class="icon-btn hidden" aria-label="Go to home">⌂</button>
     </header>
 
+    <section id="seo-intro" class="seo-intro" aria-label="About Sudoku Daily Play">
+      <h2>Free Online Sudoku Puzzles</h2>
+      <p>
+        Play free Sudoku puzzles online every day. Enjoy a new Daily Challenge,
+        track your stats, build your streak and compete on the leaderboard.
+      </p>
+    </section>
+
     <!-- HOME SCREEN (hidden by default for now) -->
-    <main id="screen-home" class="screen hidden">
+    <main id="screen-home" class="screen">
       <section class="home-modes">
         <button class="mode-card" id="mode-justplay">Just Play</button>
         <!-- later: AI difficulty functionality -->
@@ -83,7 +96,7 @@
     </main>
 
     <!-- GAME SCREEN (UI) -->
-    <main id="screen-game" class="screen">
+    <main id="screen-game" class="screen hidden">
 
 	<!-- Status bar -->
   	<div class="status-bar">
