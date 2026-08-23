@@ -221,9 +221,14 @@ let solutionBoard = [
 
 
 // ---------- NEW PUZZLE HANDLER ----------
-function loadGeneratedPuzzle(difficulty, shouldRecordStart = false) {
-
-  setMessage("Generating puzzle…", "info");
+function loadGeneratedPuzzle(
+  difficulty,
+  shouldRecordStart = false
+) {
+  setMessage(
+    "Generating puzzle…",
+    "info"
+  );
 
   lives = 3;
   hintsLeft = 3;
@@ -231,35 +236,70 @@ function loadGeneratedPuzzle(difficulty, shouldRecordStart = false) {
   mistakesMade = 0;
   isPaused = false;
 
-  /*A new puzzle must also be allowed to complete.*/
+  // A new puzzle must be allowed to complete.
   gameCompleted = false;
-  
+
   renderLives(lives);
   renderTimer(elapsedSeconds);
 
-  // In case generation takes a moment, allow the UI to update:
-  setTimeout(() => {
-    const { puzzle, solution } = generatePuzzle(difficulty);
-    
-    initialBoard  = puzzle;
-    solutionBoard = solution;
-    currentBoard  = deepCopy(puzzle);
+  const board =
+    document.getElementById("board");
 
-    window.gameInProgress = true;
-    
-    showPlayingMode();   
-    createBoard();
-    startTimer();
+  /*
+    Hide any previous/unfinished board while
+    the new puzzle is being prepared.
+  */
+  board?.classList.remove(
+    "board-ready"
+  );
 
-    //Record Stats
-    currentDifficulty = difficulty || "easy"; 
+  /*
+    Generate the puzzle immediately.
+  */
+  const {
+    puzzle,
+    solution
+  } = generatePuzzle(difficulty);
 
-    if (shouldRecordStart) {
-      recordGameStarted(currentDifficulty);
-    }
-    
-    setMessage(`New ${difficulty} puzzle ready. Good luck!`, "success");
-  }, 10);
+  initialBoard = puzzle;
+  solutionBoard = solution;
+  currentBoard = deepCopy(puzzle);
+
+  window.gameInProgress = true;
+
+  /*
+    Make sure the game UI is visible,
+    then construct all 81 cells.
+  */
+  showPlayingMode();
+  createBoard();
+
+  /*
+    createBoard() is synchronous, so at this point
+    the full Sudoku board already exists.
+
+    Reveal it immediately — no setTimeout and
+    no requestAnimationFrame required.
+  */
+  board?.classList.add(
+    "board-ready"
+  );
+
+  startTimer();
+
+  currentDifficulty =
+    difficulty || "easy";
+
+  if (shouldRecordStart) {
+    recordGameStarted(
+      currentDifficulty
+    );
+  }
+
+  setMessage(
+    `New ${difficulty} puzzle ready. Good luck!`,
+    "success"
+  );
 }
 
 document.getElementById("newPuzzle")?.addEventListener("click", (event) => {

@@ -385,7 +385,7 @@ p {
   overflow: hidden;
   border: 2px solid #365f46;
   border-radius: 0.6rem;
-  background: #d7ddea;
+  background: #ffffff;
 }
 
 .home-number-pad {
@@ -1018,7 +1018,7 @@ select.ui-button,
   border: 2px solid var(--blue);
   border-radius: 12px;
 
-  background: var(--border);
+  background: #ffffff;
 }
 
 .cell-container {
@@ -2577,4 +2577,177 @@ body.standard-page > main {
     completionPop
     450ms
     ease-out;
+}
+
+/* =========================================================
+   MOBILE-FIRST HOMEPAGE GAME
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .home-hero-v2 {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 100%;
+
+    padding: 0.75rem 0 0;
+
+    overflow-x: hidden;
+  }
+
+  /* Game first */
+  .home-smart-game {
+    order: 1;
+
+    width: calc(100% - 1rem);
+    max-width: 100%;
+
+    margin: 0 auto;
+
+    box-sizing: border-box;
+  }
+
+  /* Marketing content follows the game */
+  .home-hero-copy {
+    order: 2;
+
+    width: 100%;
+    max-width: 100%;
+
+    padding: 2rem 1rem;
+
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .home-smart-game,
+  .home-smart-game * {
+    box-sizing: border-box;
+  }
+
+  .home-smart-game .home-status-bar {
+    width: 100%;
+  }
+
+  .home-smart-game .board-wrapper {
+    width: 100%;
+    max-width: 100%;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .home-smart-game #board {
+    width: 100%;
+    max-width: 100%;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .home-number-pad {
+    width: 100%;
+    max-width: 100%;
+
+    justify-content: center;
+  }
+
+  .home-game-tools {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  /* Prevent anything on the homepage forcing
+     the viewport wider than the phone */
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 430px) {
+
+  .home-smart-game {
+    width: calc(100% - 0.75rem);
+  }
+
+  .home-smart-game .board-wrapper {
+    padding: 5px;
+  }
+
+  .home-smart-game .home-status-bar {
+    gap: 0.45rem;
+  }
+
+  .home-status-item {
+    min-width: 0;
+    padding: 0.8rem 0.35rem;
+  }
+
+  .home-status-item strong {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 700px) {
+
+  .home-game-tools {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 0.6rem;
+
+    width: 100%;
+  }
+
+  .home-tool-button {
+    width: 100%;
+    min-width: 0;
+
+    padding: 0.75rem 0.5rem;
+
+    font-size: 0.95rem;
+  }
+}
+
+/* =========================================================
+   BOARD INITIAL LOADING STATE
+   ========================================================= */
+
+/*
+  Keep the board's physical space in the layout,
+  but do not show any unfinished board before
+  JavaScript has created the 81 cells.
+*/
+#board {
+  visibility: hidden;
+  opacity: 0;
+
+  /* Neutral instead of blue while initialising */
+  background: #ffffff;
+}
+
+/*
+  Once legacyGame.js has generated the puzzle,
+  display it immediately.
+*/
+#board.board-ready {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/*
+  IMPORTANT:
+  The wrapper was responsible for the blue flash
+  while the board itself was hidden.
+*/
+.home-smart-game .board-wrapper,
+.home-smart-game .home-board-wrapper {
+  background: transparent;
 }
