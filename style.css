@@ -2948,3 +2948,7 @@ body.standard-page > main {
     overflow-x: hidden;
   }
 }
+
+.ad-block {
+  display: none;
+}
