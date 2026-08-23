@@ -7,11 +7,13 @@ export function setMessage(text, type = "info") {
 
 export function renderLives(lives) {
   const el = document.getElementById("lives");
-  //if (!el) return;
-  if (el) el.textContent = `Lives: ${lives}`;
 
-  // Enforce default:
-  const safeLives = Number.isFinite(lives) ? lives : 3;
+  if (!el) return;
+
+  const safeLives = Number.isFinite(lives)
+    ? lives
+    : 3;
+
   el.textContent = `Lives: ${safeLives}`;
 }
 
@@ -28,22 +30,14 @@ export function showSetupMode() {
     "lives",
     "timer",
     "hint",
+    "board-wrapper",
     "board",
     "number-pad",
     "clear",
     "pauseResume",
     "eraseCell",
     "pencilToggle"
-  
-    /*
   ].forEach(id => {
-    document.getElementById(id)?.classList.add("hidden");
-  });
-
-  document.getElementById("difficulty")?.classList.remove("hidden");
-  document.getElementById("newPuzzle")?.classList.remove("hidden");
-  */
- ].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
 
@@ -66,10 +60,11 @@ export function showSetupMode() {
   }
 
   const message = document.getElementById("message");
-  if (message) {
-    message.textContent = "Choose a difficulty, then click Start Puzzle.";
-  }
 
+  if (message) {
+    message.textContent =
+      "Choose a difficulty, then click Start Puzzle.";
+  }
 }
 
 export function showPlayingMode() {
@@ -77,6 +72,7 @@ export function showPlayingMode() {
     "lives",
     "timer",
     "hint",
+    "board-wrapper",
     "board",
     "number-pad",
     "clear",
@@ -84,11 +80,21 @@ export function showPlayingMode() {
     "eraseCell",
     "pencilToggle"
   ].forEach(id => {
-    document.getElementById(id)?.classList.remove("hidden");
+    const el = document.getElementById(id);
+
+    if (!el) return;
+
+    el.classList.remove("hidden");
+    el.style.display = "";
   });
 
-  document.getElementById("difficulty")?.classList.remove("hidden");
-  document.getElementById("newPuzzle")?.classList.remove("hidden");
+  document
+    .getElementById("difficulty")
+    ?.classList.remove("hidden");
+
+  document
+    .getElementById("newPuzzle")
+    ?.classList.remove("hidden");
 }
 
 export function resetGameScreenUI() {

@@ -1,190 +1,652 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
 
-  <title>Sudoku Daily Play – Free Online Sudoku Puzzles</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <meta name="description" 
-        content="Play free Sudoku puzzles online every day. Enjoy a new Daily Challenge, track your stats, build your streak and compete on the leaderboard.">
-  
+  <title>Play Free Sudoku Every Day | Sudoku Daily Play</title>
+
+  <meta
+    name="description"
+    content="Play free Sudoku online, complete the daily challenge, choose your difficulty and improve your skills with practical Sudoku guides."
+  >
+
   <link rel="canonical" href="https://sudokudailyplay.com/">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" href="/icon-192.png">
 
-   <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-  <link rel="shortcut icon" href="icon-192.png">
-
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
-
-  <!-- Theme colour -->
-  <meta name="theme-color" content="#0b6e2f">
-
-  <!-- Social sharing -->
-  <meta property="og:title" content="Sudoku Daily Play">
-  <meta property="og:description" content="Play free Sudoku puzzles online every day.">
-  <meta property="og:image" content="https://sudokudailyplay.com/icon-192.png">
+  <meta property="og:title" content="Play Free Sudoku Every Day">
+  <meta
+    property="og:description"
+    content="Play today's Sudoku challenge or choose an easy, medium or hard puzzle."
+  >
   <meta property="og:url" content="https://sudokudailyplay.com/">
   <meta property="og:type" content="website">
-  
-  <link rel="stylesheet" href="style.css" />
-  
-    <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HWD1N8H02V"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-HWD1N8H02V');
-  </script>
-
-  <script>
-    window.trackEvent = function(eventName, params = {}) {
-      if (typeof gtag === "function") {
-        gtag("event", eventName, params);
-      } else {
-        console.log("GA event:", eventName, params);
-      }
-    };
-  </script>
 </head>
 
 <body>
-  <div class="page-shell">
-  <div class="app">
+  <header class="site-header">
+    <a class="site-logo" href="/index.html">
+      Sudoku Daily Play
+    </a>
 
-    <!-- TOP BAR (always visible) -->
-    <header class="topbar">
-      <button id="menu-btn" class="icon-btn" aria-label="Open menu">☰</button>
-      <h1 class="app-title">Sudoku Daily Play</h1>
-      <button id="home-btn" class="icon-btn hidden" aria-label="Go to home">⌂</button>
-    </header>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="/play.html">Play</a>
+      <a href="/daily.html">Daily Challenge</a>
+      <a href="/academy/">Learn</a>
+      <a href="/leaderboard.html">Leaderboard</a>
+      <a href="/about.html">About</a>
+    </nav>
+  </header>
 
-    <section id="seo-intro" class="seo-intro" aria-label="About Sudoku Daily Play">
-      <h2>Free Online Sudoku Puzzles</h2>
-      <p>
-        Play free Sudoku puzzles online every day. Enjoy a new Daily Challenge,
-        track your stats, build your streak and compete on the leaderboard.
+<main>
+
+  <!-- =====================================
+       HERO AND SMART PLAY AREA
+       ===================================== -->
+
+  <section class="home-hero-v2">
+
+    <div class="home-hero-copy">
+
+      <h1>A New Sudoku Puzzle Every Day</h1>
+
+      <p class="home-hero-description">
+        Keep your streak alive, improve your solving skills and enjoy
+        a fresh Sudoku challenge every day.
       </p>
-    </section>
 
-    <!-- HOME SCREEN (hidden by default for now) -->
-    <main id="screen-home" class="screen">
-      <section class="home-modes">
-        <button class="mode-card" id="mode-justplay">Just Play</button>
-        <!-- later: AI difficulty functionality -->
-        <!--<button class="mode-card" id="mode-smartplay">Smart Play</button> -->
-        <button class="mode-card" id="mode-daily">Daily Challenge</button>
-      </section>
+      <div class="home-primary-actions">
+        <button
+          id="home-start-daily"
+          class="button button-primary"
+          type="button"
+        >
+          Play Today’s Puzzle
+        </button>
 
-      <nav class="home-bottom-tabs">
-        <button id="tab-stats">Stats</button>
-        <button id="tab-leaderboard">Leaderboard</button>
-        <button id="tab-notifications">Notifications</button>
-      </nav>
-
-      <section id="home-panel-area" class="home-panel-area">
-        <!-- later: stats/leaderboard/notifications content -->
-      </section>
-    </main>
-
-    <!-- DAILY SCREEN -->
-    <main id="dailyScreen" class="screen hidden">
-      <h2>Daily Challenge</h2>
-
-      <div class="daily-card">
-        <h3 id="dailyTodayTitle">Today</h3>
-        <p id="dailyStatus">Not completed yet</p>
-
-        <div class="daily-streaks">
-          🔥 Current streak: <span id="dailyCurrentStreak">0</span><br>
-          🏆 Best streak: <span id="dailyBestStreak">0</span>
-        </div>
-
-        <button id="startTodayDaily">Start Today’s Puzzle</button>
+        <a
+          class="button button-secondary"
+          href="/play.html"
+        >
+          Practice Mode
+        </a>
       </div>
 
-      <h3>Recent Daily Challenges</h3>
-      <div id="dailyCalendar" class="daily-calendar"></div>
+      <p class="home-social-proof">
+        Build a daily Sudoku habit, improve your time and learn new strategies.
+      </p>
 
-      <button id="backFromDaily">Back</button>
-    </main>
-
-    <!-- GAME SCREEN (UI) -->
-    <main id="screen-game" class="screen hidden">
-
-	<!-- Status bar -->
-  	<div class="status-bar">
-    		<div id="lives" class="lives">Lives: 3</div>
-    		<button id="hint" class="ui-button">Hint (3)</button>
-    		<div id="timer" class="timer">Time: 00:00</div>
-  	</div>
-
-  	<!-- Board + Side panel -->
-  	<div class="main-row">
-    		<div class="board-wrapper">
-      	<div id="board" class="board"></div>
-    	</div>
-
-     <div class="side-panel">
-          <select id="difficulty">
-        	<option value="easy">Easy</option>
-        	<option value="medium" selected>Medium</option>
-        	<option value="hard">Hard</option>
-        	<option value="expert">Expert</option>
-
-      	   </select>
-      		<button id="newPuzzle" class="ui-button">New Puzzle</button>	
-      		<button id="pauseResume" class="ui-button">Pause</button>
-      		<button id="eraseCell" class="ui-button">Erase</button>
-      		<button id="pencilToggle" class="ui-button">Pencil: Off</button>
-      	 </div>
-    	</div>
-
-  	<!-- Number pad -->
-  	<div id="number-pad" class="number-pad"></div>
-
-  	<!-- Message -->
-  	<div id="message" class="message"></div>
-
-    </main>
-
-  </div>
-
-  <!-- LEFT SLIDE-IN PANE (Profile/Settings/Upgrade later) -->
-  <div id="side-overlay" class="overlay hidden"></div>
-
-  <aside id="side-pane" class="side-pane hidden" aria-label="Menu">
-    <div class="side-header">
-      <h2>Menu</h2>
-      <button id="close-pane" class="icon-btn" aria-label="Close menu">✕</button>
     </div>
 
-    <div class="side-items">
-      <button id="nav-profile" class="side-item">Profile</button>
-      <button id="nav-settings" class="side-item">Settings</button>
-      <button id="nav-upgrade" class="side-item">Upgrade</button>
+
+    <!-- SMART PLAY AREA -->
+
+    <section
+      id="home-smart-game"
+      class="home-smart-game"
+      aria-labelledby="home-game-heading"
+    >
+
+      <div class="home-game-header">
+
+        <div>
+          <p
+            id="home-game-date"
+            class="home-game-date"
+          >
+            Today’s Challenge
+          </p>
+
+          <h2 id="home-game-heading">
+            Play Today’s Sudoku
+          </h2>
+        </div>
+
+        <span
+          id="home-game-difficulty"
+          class="difficulty-badge"
+        >
+          Medium
+        </span>
+
+      </div>
+
+
+      <!-- STATE: CHALLENGE NOT YET COMPLETED -->
+
+      <div
+        id="home-daily-active"
+        class="home-game-state"
+      >
+
+        <div class="home-status-bar">
+
+          <div class="home-status-item">
+            <span class="home-status-label">Time</span>
+            <strong id="timer">Time: 00:00</strong>
+          </div>
+
+          <div class="home-status-item">
+            <span class="home-status-label">Lives</span>
+            <strong id="lives">Lives: 3</strong>
+          </div>
+
+          <div class="home-status-item">
+            <span class="home-status-label">Streak</span>
+            <strong id="home-current-streak">0</strong>
+          </div>
+
+        </div>
+
+        <div id="board-wrapper" class="home-board-wrapper board-wrapper">
+          <div
+            id="board"
+            class="home-board board"
+            aria-label="Today’s Sudoku puzzle"
+          ></div>
+        </div>
+
+        <div
+          id="number-pad"
+          class="home-number-pad number-pad"
+          aria-label="Sudoku number controls"
+        ></div>
+
+        <div class="home-game-tools">
+
+          <button
+            id="pencilToggle"
+            class="home-tool-button"
+            type="button"
+          >
+            Pencil: Off
+          </button>
+
+          <button
+            id="eraseCell"
+            class="home-tool-button"
+            type="button"
+          >
+            Erase
+          </button>
+
+          <button
+            id="hint"
+            class="home-tool-button"
+            type="button"
+          >
+            Hint (3)
+          </button>
+
+          <button
+            id="pauseResume"
+            class="home-tool-button"
+            type="button"
+          >
+            Pause
+          </button>
+
+        </div>
+
+        <p
+          id="message"
+          class="home-game-message message"
+          aria-live="polite"
+        ></p>
+
+        <!-- Required by the current shared game engine.
+             These controls stay hidden because the homepage always
+             launches today's Medium Daily Challenge. -->
+        <div class="hidden" aria-hidden="true">
+          <label for="difficulty">Difficulty</label>
+
+          <select id="difficulty" tabindex="-1">
+            <option value="medium" selected>Medium</option>
+          </select>
+
+          <button id="newPuzzle" type="button" tabindex="-1">
+            Start Puzzle
+          </button>
+        </div>
+
+      </div>
+
+
+      <!-- STATE: CHALLENGE ALREADY COMPLETED -->
+
+      <div
+        id="home-daily-complete"
+        class="home-complete-state hidden"
+      >
+
+        <div class="completion-icon" aria-hidden="true">
+          ✓
+        </div>
+
+        <h3>Today’s Challenge Complete!</h3>
+
+        <p>
+          You completed today’s puzzle in
+          <strong id="home-completion-time">00:00</strong>.
+        </p>
+
+        <div class="completion-summary completion-summary-three">
+
+          <div>
+            <span>Time</span>
+            <strong id="home-result-time">
+              00:00
+            </strong>
+          </div>
+
+          <div>
+            <span>Mistakes</span>
+            <strong id="home-result-mistakes">
+              0
+            </strong>
+          </div>
+
+          <div>
+            <span>Current streak</span>
+            <strong id="home-completed-streak">
+              0
+            </strong>
+          </div>
+
+        </div>
+
+        <!-- LEADERBOARD NAME SETUP -->
+          <!-- Only shown for a player who has not chosen a name yet -->
+
+          <div
+            id="leaderboard-name-setup"
+            class="leaderboard-name-setup hidden"
+          >
+
+            <label for="leaderboard-player-name">
+              Choose your leaderboard name
+            </label>
+
+            <div class="leaderboard-name-row">
+
+              <input
+                id="leaderboard-player-name"
+                type="text"
+                maxlength="24"
+                autocomplete="nickname"
+                placeholder="e.g. SudokuFox"
+              >
+
+              <button
+                id="save-leaderboard-name"
+                class="button button-primary"
+                type="button"
+              >
+                Join Leaderboard
+              </button>
+
+            </div>
+
+            <p class="leaderboard-name-help">
+              You only need to choose a name once.
+            </p>
+
+          </div>
+
+
+
+        <h4>Ready for another puzzle?</h4>
+
+        <div class="completion-actions">
+
+          <a
+            class="button button-primary"
+            href="/play.html?difficulty=easy"
+          >
+            Play Easy
+          </a>
+
+          <a
+            class="button button-secondary"
+            href="/play.html"
+          >
+            Choose Difficulty
+          </a>
+
+          <button
+            id="share-daily-result"
+            class="button button-secondary"
+            type="button"
+          >
+            Share My Result
+          </button>
+
+        </div>
+
+        <p
+          id="share-result-message"
+          class="share-result-message"
+          aria-live="polite"
+        ></p>
+
+        <a
+          class="text-link"
+          href="/leaderboard.html"
+        >
+          View today’s leaderboard →
+        </a>
+
+      </div>
+
+    </section>
+
+  </section>
+
+
+  <!-- =====================================
+       MAIN BENEFITS
+       ===================================== -->
+
+  <section
+    class="home-benefits"
+    aria-labelledby="benefits-heading"
+  >
+
+    <h2 id="benefits-heading" class="visually-hidden">
+      Why play Sudoku Daily Play?
+    </h2>
+
+    <article class="benefit-card">
+      <span class="benefit-icon" aria-hidden="true">🏆</span>
+
+      <div>
+        <h3>Daily Challenge</h3>
+        <p>
+          Solve a fresh puzzle every day and keep your streak alive.
+        </p>
+      </div>
+    </article>
+
+    <article class="benefit-card">
+      <span class="benefit-icon" aria-hidden="true">🔥</span>
+
+      <div>
+        <h3>Build Your Streak</h3>
+        <p>
+          Make Sudoku part of your daily routine and build consistency.
+        </p>
+      </div>
+    </article>
+
+    <article class="benefit-card">
+      <span class="benefit-icon" aria-hidden="true">📈</span>
+
+      <div>
+        <h3>Track Your Progress</h3>
+        <p>
+          Monitor your solving times, completed games and improvement.
+        </p>
+      </div>
+    </article>
+
+  </section>
+
+
+  <!-- =====================================
+       TODAY'S CHALLENGE INFORMATION
+       ===================================== -->
+
+  <section
+    class="home-challenge-information"
+    aria-labelledby="challenge-information-heading"
+  >
+
+    <h2
+      id="challenge-information-heading"
+      class="visually-hidden"
+    >
+      Today’s Sudoku challenge information
+    </h2>
+
+    <div class="challenge-information-item">
+      <span class="challenge-information-icon" aria-hidden="true">⏱️</span>
+
+      <div>
+        <span class="challenge-information-label">
+          Estimated time
+        </span>
+
+        <strong id="home-estimated-time">
+          5–10 minutes
+        </strong>
+      </div>
     </div>
 
-    
-    <div id="side-content" class="side-content">
-      <!-- later: render settings/profile UI here -->
-    </div>
-  </aside>
+    <div class="challenge-information-item">
+      <span class="challenge-information-icon" aria-hidden="true">🔥</span>
 
-  <script type="module" src="./js/app.js"></script>
+      <div>
+        <span class="challenge-information-label">
+          Current streak
+        </span>
+
+        <strong>
+          <span id="home-information-current-streak">0</span>
+          days
+        </strong>
+      </div>
+    </div>
+
+    <div class="challenge-information-item">
+      <span class="challenge-information-icon" aria-hidden="true">🏆</span>
+
+      <div>
+        <span class="challenge-information-label">
+          Best streak
+        </span>
+
+        <strong>
+          <span id="home-information-best-streak">0</span>
+          days
+        </strong>
+      </div>
+    </div>
+
+    <div class="challenge-information-item">
+      <span class="challenge-information-icon" aria-hidden="true">🧩</span>
+
+      <div>
+        <span class="challenge-information-label">
+          Today’s difficulty
+        </span>
+
+        <strong id="home-information-difficulty">
+          Medium
+        </strong>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- =====================================
+       HOW IT WORKS
+       ===================================== -->
+
+  <section
+    class="home-how-it-works"
+    aria-labelledby="how-it-works-heading"
+  >
+
+    <header class="home-section-heading">
+      <p class="home-eyebrow">Simple daily practice</p>
+
+      <h2 id="how-it-works-heading">
+        How It Works
+      </h2>
+    </header>
+
+    <div class="how-it-works-grid">
+
+      <article class="how-step">
+        <span class="how-step-number">1</span>
+        <span class="how-step-icon" aria-hidden="true">📅</span>
+
+        <h3>A New Puzzle Every Day</h3>
+
+        <p>
+          Visit each day for a fresh challenge shared by every player.
+        </p>
+      </article>
+
+      <article class="how-step">
+        <span class="how-step-number">2</span>
+        <span class="how-step-icon" aria-hidden="true">✏️</span>
+
+        <h3>Solve and Improve</h3>
+
+        <p>
+          Use logic, pencil notes and practical strategies to finish the grid.
+        </p>
+      </article>
+
+      <article class="how-step">
+        <span class="how-step-number">3</span>
+        <span class="how-step-icon" aria-hidden="true">📊</span>
+
+        <h3>Track and Compete</h3>
+
+        <p>
+          Improve your time, maintain your streak and climb the leaderboard.
+        </p>
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================
+       ACADEMY PREVIEW
+       ===================================== -->
+
+  <section
+    class="academy-preview"
+    aria-labelledby="academy-heading"
+  >
+
+    <div class="section-heading">
+
+      <div>
+        <p class="home-eyebrow">Sudoku Academy</p>
+
+        <h2 id="academy-heading">
+          Improve Your Sudoku Skills
+        </h2>
+      </div>
+
+      <a class="text-link" href="/academy/">
+        View all guides →
+      </a>
+
+    </div>
+
+    <div class="academy-preview-grid">
+
+      <article>
+        <h3>
+          <a href="/academy/how-to-play-sudoku.html">
+            How to Play Sudoku
+          </a>
+        </h3>
+
+        <p>
+          Understand the rules and solve your first puzzle step by step.
+        </p>
+      </article>
+
+      <article>
+        <h3>
+          <a href="/academy/find-the-easy-numbers.html">
+            Find the Easy Numbers First
+          </a>
+        </h3>
+
+        <p>
+          Learn how simple placements reveal more solving opportunities.
+        </p>
+      </article>
+
+      <article>
+        <h3>
+          <a href="/academy/common-sudoku-mistakes.html">
+            Common Sudoku Mistakes
+          </a>
+        </h3>
+
+        <p>
+          Avoid guessing, rushing and focusing on difficult squares too early.
+        </p>
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================
+       FINAL CALL TO ACTION
+       ===================================== -->
+
+  <section class="home-final-cta">
+
+    <div>
+      <p class="home-eyebrow">
+        Ready for today’s challenge?
+      </p>
+
+      <h2>
+        Start Building Your Sudoku Streak
+      </h2>
+
+      <p>
+        Complete one puzzle today and return tomorrow for the next.
+      </p>
+    </div>
+
+    <button
+      id="home-final-daily-button"
+      class="button button-light"
+      type="button"
+    >
+      Play Today’s Puzzle
+    </button>
+
+  </section>
+
+  </main>
 
   <footer class="site-footer">
-    <a href="privacy.html">Privacy Policy</a>
-    <span>•</span>
-    <a href="terms.html">Terms of Service</a>
+    <p>&copy; 2026 Sudoku Daily Play</p>
+
+    <nav aria-label="Footer navigation">
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/about.html">About</a>
+    </nav>
   </footer>
-  
-  </div>
+
+
+<!-- Homepage / Daily Challenge -->
+<script
+  type="module"
+  src="/js/homePage.js"
+></script>
+
 </body>
 </html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Sudoku Challenge | Sudoku Daily Play</title>
+  <meta name="description" content="Play today's free Sudoku challenge, build your streak and review your recent Daily Challenge history.">
+  <link rel="canonical" href="https://sudokudailyplay.com/daily.html">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
+  <link rel="shortcut icon" href="/icon-192.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0b6e2f">
+  <meta property="og:title" content="Daily Sudoku Challenge">
+  <meta property="og:description" content="Complete today's Sudoku, maintain your streak and return tomorrow for a new challenge.">
+  <meta property="og:image" content="https://sudokudailyplay.com/icon-192.png">
+  <meta property="og:url" content="https://sudokudailyplay.com/daily.html">
+  <meta property="og:type" content="website">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HWD1N8H02V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-HWD1N8H02V");
+    window.trackEvent = function(eventName, params = {}) {
+      if (typeof gtag === "function") gtag("event", eventName, params);
+    };
+  </script>
+</head>
+
+<body class="standard-page">
+  <header class="site-header">
+    <a class="site-logo" href="/">Sudoku Daily Play</a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="/play.html">Play</a>
+      <a href="/daily.html" aria-current="page">Daily Challenge</a>
+      <a href="/academy/">Learn</a>
+      <a href="/leaderboard.html">Leaderboard</a>
+      <a href="/about.html">About</a>
+    </nav>
+  </header>
+
+  <main class="daily-page">
+    <header class="daily-page-header">
+      <p class="daily-kicker">Daily Challenge</p>
+      <h1>Today’s Sudoku Challenge</h1>
+      <p>Solve one shared puzzle today, keep your streak alive and come back tomorrow for the next challenge.</p>
+    </header>
+
+    <section class="daily-today-card" aria-labelledby="dailyTodayTitle">
+      <div class="daily-today-card__top">
+        <div>
+          <p class="daily-card-label">Today</p>
+          <h2 id="dailyTodayTitle">Today’s puzzle</h2>
+          <p id="dailyStatus" class="daily-status">Not completed yet</p>
+        </div>
+        <span class="difficulty-badge">Medium</span>
+      </div>
+
+      <div class="daily-streak-grid">
+        <div class="daily-streak-item">
+          <span>🔥</span>
+          <div>
+            <small>Current streak</small>
+            <strong><span id="dailyCurrentStreak">0</span> days</strong>
+          </div>
+        </div>
+
+        <div class="daily-streak-item">
+          <span>🏆</span>
+          <div>
+            <small>Best streak</small>
+            <strong><span id="dailyBestStreak">0</span> days</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="daily-primary-action">
+        <button id="startTodayDaily" class="button button-primary" type="button">
+          Play Today’s Puzzle
+        </button>
+        <a id="dailyPracticeLink" class="text-link hidden" href="/play.html">Play another puzzle →</a>
+      </div>
+    </section>
+
+    <section class="daily-history-section" aria-labelledby="daily-history-heading">
+      <div class="daily-section-heading">
+        <div>
+          <p class="daily-card-label">Your last 14 days</p>
+          <h2 id="daily-history-heading">Challenge History</h2>
+        </div>
+        <p>✓ completed &nbsp;•&nbsp; Today highlighted</p>
+      </div>
+
+      <div id="dailyCalendar" class="daily-calendar" aria-label="Recent Daily Challenge history"></div>
+    </section>
+
+    <section class="daily-practice-strip">
+      <div>
+        <strong>Want another puzzle?</strong>
+        <span>Practice Mode has unlimited Easy to Expert Sudoku.</span>
+      </div>
+      <a class="button button-secondary" href="/play.html">Practice Mode</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Sudoku Daily Play</p>
+    <nav aria-label="Footer navigation">
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/about.html">About</a>
+    </nav>
+  </footer>
+
+  <script type="module" src="/js/dailyPage.js"></script>
+</body>
+</html>

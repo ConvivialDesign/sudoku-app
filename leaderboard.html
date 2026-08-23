@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sudoku Leaderboard | Sudoku Daily Play</title>
+
+  <meta
+    name="description"
+    content="See today's fastest Sudoku Daily Challenge players and compete for a place on the Sudoku Daily Play leaderboard."
+  >
+
+  <link
+    rel="canonical"
+    href="https://sudokudailyplay.com/leaderboard.html"
+  >
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="/style.css">
+
+  <!-- Favicon -->
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="192x192"
+    href="/icon-192.png"
+  >
+
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="512x512"
+    href="/icon-512.png"
+  >
+
+  <link
+    rel="shortcut icon"
+    href="/icon-192.png"
+  >
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+
+  <meta
+    name="theme-color"
+    content="#0b6e2f"
+  >
+
+  <!-- Social sharing -->
+  <meta
+    property="og:title"
+    content="Sudoku Leaderboard | Sudoku Daily Play"
+  >
+
+  <meta
+    property="og:description"
+    content="See today's fastest Daily Challenge players and compete for a place on the leaderboard."
+  >
+
+  <meta
+    property="og:image"
+    content="https://sudokudailyplay.com/icon-192.png"
+  >
+
+  <meta
+    property="og:url"
+    content="https://sudokudailyplay.com/leaderboard.html"
+  >
+
+  <meta
+    property="og:type"
+    content="website"
+  >
+
+  <!-- Google Analytics -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-HWD1N8H02V"
+  ></script>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag("js", new Date());
+    gtag("config", "G-HWD1N8H02V");
+
+    window.trackEvent = function(eventName, params = {}) {
+      if (typeof gtag === "function") {
+        gtag("event", eventName, params);
+      }
+    };
+  </script>
+</head>
+
+
+<body class="standard-page">
+
+  <!-- =====================================================
+       SITE HEADER
+       ===================================================== -->
+
+  <header class="site-header">
+
+    <a
+      class="site-logo"
+      href="/"
+    >
+      Sudoku Daily Play
+    </a>
+
+    <nav
+      class="site-nav"
+      aria-label="Main navigation"
+    >
+
+      <a href="/play.html">
+        Play
+      </a>
+
+      <a href="/daily.html">
+        Daily Challenge
+      </a>
+
+      <a href="/academy/">
+        Learn
+      </a>
+
+      <a
+        href="/leaderboard.html"
+        aria-current="page"
+      >
+        Leaderboard
+      </a>
+
+      <a href="/about.html">
+        About
+      </a>
+
+    </nav>
+
+  </header>
+
+
+  <!-- =====================================================
+       LEADERBOARD
+       ===================================================== -->
+
+  <main class="leaderboard-page">
+
+    <!-- Intro -->
+
+    <header class="leaderboard-header">
+
+      <p class="leaderboard-kicker">
+        Daily Challenge
+      </p>
+
+      <h1>
+        Sudoku Leaderboard
+      </h1>
+
+      <p>
+        Complete today's Daily Challenge and see how your
+        solving time compares with other players.
+      </p>
+
+    </header>
+
+
+    <!-- Leaderboard card -->
+
+    <section
+      class="leaderboard-card"
+      aria-labelledby="leaderboard-heading"
+    >
+
+      <div class="leaderboard-card-header">
+
+        <div>
+
+          <p class="leaderboard-card-label">
+            Today's Challenge
+          </p>
+
+          <h2 id="leaderboard-heading">
+            Fastest Solvers
+          </h2>
+
+        </div>
+
+        <div
+          id="leaderboard-date"
+          class="leaderboard-date"
+        >
+          Today
+        </div>
+
+      </div>
+
+
+      <!-- Column headings -->
+
+      <div class="leaderboard-table-header">
+
+        <span>Rank</span>
+        <span>Player</span>
+        <span>Time</span>
+        <span>Mistakes</span>
+
+      </div>
+
+
+      <!--
+        leaderboardPage.js will eventually replace this
+        section with real Supabase results.
+      -->
+
+      <div
+        id="leaderboard-results"
+        class="leaderboard-results"
+      >
+
+        <div class="leaderboard-empty">
+
+          <span class="leaderboard-empty-icon">
+            🏆
+          </span>
+
+          <strong>
+            The leaderboard is just getting started.
+          </strong>
+
+          <p>
+            Complete today's challenge to become one of
+            the first players on the board.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Current player -->
+
+    <section
+      id="your-leaderboard-result"
+      class="your-leaderboard-result hidden"
+    >
+
+      <div>
+
+        <small>
+          Your result
+        </small>
+
+        <strong id="your-leaderboard-rank">
+          #–
+        </strong>
+
+      </div>
+
+      <div>
+
+        <small>
+          Time
+        </small>
+
+        <strong id="your-leaderboard-time">
+          --:--
+        </strong>
+
+      </div>
+
+      <div>
+
+        <small>
+          Mistakes
+        </small>
+
+        <strong id="your-leaderboard-mistakes">
+          –
+        </strong>
+
+      </div>
+
+    </section>
+
+    <section class="ad-block" aria-label="Advertisement">
+      <span class="ad-label">Advertisement</span>
+
+      <div class="ad-placeholder">
+        <span>Ad space</span>
+      </div>
+    </section>
+
+
+    <!-- CTA -->
+
+    <section class="leaderboard-cta">
+      <div>
+
+        <strong>
+          Think you can make the leaderboard?
+        </strong>
+
+        <span>
+          Complete today's shared Sudoku puzzle and
+          compare your time.
+        </span>
+
+      </div>
+
+      <a
+        class="button button-primary"
+        href="/#home-smart-game"
+      >
+        Play Today's Challenge
+      </a>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+
+  <footer class="site-footer">
+
+    <p>
+      &copy; 2026 Sudoku Daily Play
+    </p>
+
+    <nav aria-label="Footer navigation">
+
+      <a href="/privacy.html">
+        Privacy
+      </a>
+
+      <a href="/terms.html">
+        Terms
+      </a>
+
+      <a href="/about.html">
+        About
+      </a>
+
+    </nav>
+
+  </footer>
+
+
+  <!-- =====================================================
+       SUPABASE
+       ===================================================== -->
+
+
+<script
+  type="module"
+  src="/js/leaderboardPage.js"
+></script>
+
+</body>
+
+</html>

@@ -1,3 +1,7 @@
+import {
+  submitDailyLeaderboardScore
+} from "./leaderboardService.js";
+
 const DAILY_KEY = "sudoku_daily_challenge_v1";
 const DAILY_MODE_KEY = "sudoku_daily_mode";
 const DAILY_DATE_KEY = "sudoku_daily_date";
@@ -70,7 +74,12 @@ export function completeDailyChallenge(solveTime, mistakes) {
   const today = getTodayKey();
   const state = getDailyChallengeState();
 
-  const todayEntry = state[today] || {
+  const existingEntry = state[today];
+
+  const wasAlreadyCompleted =
+    existingEntry?.completed === true;
+
+  const todayEntry = existingEntry || {
     date: today,
     started: true,
     completed: false,
@@ -87,8 +96,55 @@ export function completeDailyChallenge(solveTime, mistakes) {
 
   updateDailyStreak(state, today);
   saveDailyChallengeState(state);
+
   renderDailyScreen();
-  //localStorage.setItem(DAILY_MODE_KEY, "false");
+
+  // Submit to leaderboard only the first time
+  // today's challenge is completed.
+  if (!wasAlreadyCompleted) {
+    submitDailyLeaderboardScore({
+      challengeDate: today,
+      solveTimeSeconds: solveTime,
+      mistakes: mistakes
+    })
+      .then(result => {
+        if (result.success) {
+          console.log(
+            "Daily Challenge added to leaderboard."
+          );
+
+          window.dispatchEvent(
+            new CustomEvent(
+              "sudoku:leaderboardSubmitted",
+              {
+                detail: result
+              }
+            )
+          );
+        }
+      })
+      .catch(error => {
+        console.error(
+          "Leaderboard submission failed:",
+          error
+        );
+      });
+  }
+
+  window.dispatchEvent(
+    new CustomEvent(
+      "sudoku:dailyCompleted",
+      {
+        detail: {
+          challengeDate: today,
+          solveTime,
+          mistakes
+        }
+      }
+    )
+  );
+
+  // localStorage.setItem(DAILY_MODE_KEY, "false");
 }
 
 function updateDailyStreak(state, today) {
@@ -171,37 +227,66 @@ export function openDailyScreen() {
 export function renderDailyScreen() {
   const today = getTodayKey();
   const state = getDailyChallengeState();
-
   const todayEntry = state[today];
+  const streak = getDailyStreak();
 
-  document.getElementById("dailyTodayTitle").textContent =
-    new Date(today).toLocaleDateString("en-ZA", {
+  const title = document.getElementById("dailyTodayTitle");
+
+  if (title) {
+    const [year, month, day] = today
+      .split("-")
+      .map(Number);
+
+    title.textContent = new Date(
+      year,
+      month - 1,
+      day
+    ).toLocaleDateString("en-ZA", {
       weekday: "long",
       day: "numeric",
       month: "long",
       year: "numeric"
     });
+  }
 
-  document.getElementById("dailyStatus").textContent =
-    todayEntry?.completed
+  const status = document.getElementById("dailyStatus");
+
+  if (status) {
+    status.textContent = todayEntry?.completed
       ? "✅ Completed today"
       : "🟡 Not completed yet";
+  }
 
-  document.getElementById("startTodayDaily").textContent =
-    todayEntry?.completed
+  const startButton = document.getElementById(
+    "startTodayDaily"
+  );
+
+  if (startButton) {
+    startButton.textContent = todayEntry?.completed
       ? "Completed for today"
       : "Start Today’s Puzzle";
 
-  document.getElementById("startTodayDaily").disabled =
-    todayEntry?.completed === true;
+    startButton.disabled =
+      todayEntry?.completed === true;
+  }
 
-  const streak = getDailyStreak();
+  const currentStreak = document.getElementById(
+    "dailyCurrentStreak"
+  );
 
-  document.getElementById("dailyCurrentStreak").textContent =
-    streak.currentStreak || 0;
+  if (currentStreak) {
+    currentStreak.textContent =
+      streak.currentStreak || 0;
+  }
 
-  document.getElementById("dailyBestStreak").textContent =
-    streak.bestStreak || 0;
+  const bestStreak = document.getElementById(
+    "dailyBestStreak"
+  );
+
+  if (bestStreak) {
+    bestStreak.textContent =
+      streak.bestStreak || 0;
+  }
 
   renderDailyCalendar(state);
 }

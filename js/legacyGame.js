@@ -9,6 +9,8 @@ import { createSeededRandom } from "./seededRandom.js";
 let lives = 3;
 let hintsLeft = 3;
 let elapsedSeconds = 0;
+let mistakesMade = 0;
+
 let timerInterval = null;
 let isPaused = false;
 let currentDifficulty = "easy";
@@ -31,7 +33,7 @@ function checkAndHandleSolved() {
       localStorage.getItem("sudoku_daily_date")
     ) {
       console.log("Calling completeDailyChallenge from solved check...");
-      completeDailyChallenge(elapsedSeconds || 0, 0);
+      completeDailyChallenge(elapsedSeconds || 0,mistakesMade);
     }
 
     recordGameSolved(elapsedSeconds, currentDifficulty);
@@ -226,7 +228,11 @@ function loadGeneratedPuzzle(difficulty, shouldRecordStart = false) {
   lives = 3;
   hintsLeft = 3;
   elapsedSeconds = 0;
+  mistakesMade = 0;
   isPaused = false;
+
+  /*A new puzzle must also be allowed to complete.*/
+  gameCompleted = false;
   
   renderLives(lives);
   renderTimer(elapsedSeconds);
@@ -363,12 +369,21 @@ function stopTimer() {
 // ---------- PAUSE HELPERS ----------
 
 function setBoardEnabled(enabled) {
-  // Enable/disable all non-prefilled, non-"game over" cells
   const cells = boardEl.querySelectorAll(".cell");
+
   cells.forEach(cell => {
     if (cell.classList.contains("prefilled")) return;
-    if (cell.classList.contains("disabled")) return;  // game-over cells stay locked
-    cell.readOnly = !enabled;
+    if (cell.classList.contains("disabled")) return;
+
+    // Always keep cells read-only.
+    // Input is handled through the number pad.
+    cell.readOnly = true;
+
+    if (enabled) {
+      cell.removeAttribute("aria-disabled");
+    } else {
+      cell.setAttribute("aria-disabled", "true");
+    }
   });
 }
 
@@ -613,25 +628,39 @@ hintBtn?.addEventListener("click", () => {
 });
 
 function registerMistake(reason = "") {
-  //console.log("✅ registerMistake fired", { livesBefore: lives, reason });
   if (isPaused) return;
 
+  mistakesMade += 1;
+
+  console.log("Mistake recorded:", {
+    mistakesMade,
+    livesBefore: lives,
+    reason
+  });
 
   lives = Number.isFinite(lives) ? lives : 3;
   lives = Math.max(0, lives - 1);
 
-
   renderLives(lives);
-  setMessage(reason ? `Mistake: ${reason}` : "Mistake!", "error");
 
+  setMessage(
+    reason
+      ? `Mistake: ${reason}`
+      : "Mistake!",
+    "error"
+  );
 
-  // persist if you save game
-  if (typeof saveGame === "function") saveGame({ lives, hintsLeft, elapsedSeconds });
- 
+  if (typeof saveGame === "function") {
+    saveGame({
+      lives,
+      hintsLeft,
+      elapsedSeconds,
+      mistakesMade
+    });
+  }
+
   if (lives === 0) {
     setMessage("Game over!", "error");
-    // optionally pause/disable inputs
-    //isPaused = true;
     gameOver();
   }
 }
@@ -913,8 +942,18 @@ function finishGame() {
 
    // 🔥 Daily Challenge hook
   if (isDailyMode()) {
-    console.log("Calling completeDailyChallenge...");
-    completeDailyChallenge(elapsedSeconds || 0, 0);
+    console.log(
+      "Calling completeDailyChallenge...",
+      {
+        elapsedSeconds,
+        mistakesMade
+      }
+    );
+
+    completeDailyChallenge(
+      elapsedSeconds || 0,
+      mistakesMade
+    );
   } else {
     console.log("Not daily mode, so daily completion not saved.");
   }
@@ -1110,53 +1149,48 @@ function createBoard() {
       //Keyboard fix
       cell.readOnly = true;
       cell.inputMode = "none";
+      cell.tabIndex = -1;
 
       cell.type = "text";
       cell.maxLength = 1;
       cell.classList.add("cell");
+      
+      cell.setAttribute("aria-label", `Row ${r + 1}, Column ${c + 1}`);
 
 
 // ---------- ADDITIONAL HIGHLIGHT FUNCTIONALITY ----------
 	cell.dataset.row = String(r);
 	cell.dataset.col = String(c);
 
-// On focus/click, highlight its row & column
-	cell.addEventListener('focus', () => {
-  	   	highlightCross(r, c, cell);
-    	});
+  cell.addEventListener("pointerdown", (event) => {
+  event.preventDefault();
 
+  if (isPaused) return;
 
-cell.addEventListener('click', () => {
-  highlightCross(r, c, cell);
   activeCell = cell;
 
-  // If a number is already selected in the pad, apply it on click
-  if (!cell.classList.contains("prefilled") && selectedNumber) {
-    handleCellValueChange(cell, r, c, String(selectedNumber));
+  // Keep your existing highlight behaviour
+  highlightCross(r, c, cell);
 
-    // After use, clear the pad selection (click-once behaviour)
+  // If a number was already selected, place it
+  if (
+    !cell.classList.contains("prefilled") &&
+    selectedNumber
+  ) {
+    handleCellValueChange(
+      cell,
+      r,
+      c,
+      String(selectedNumber)
+    );
+
     selectedNumber = null;
-    document.querySelectorAll('.num-btn').forEach(b => b.classList.remove('selected'));
-  }
-});
 
-
-// Clear highlight when leaving the grid (optional)
-	cell.addEventListener('blur', (e) => {
-  		// If focus moved outside the board, clear; otherwise next focused cell will repaint anyway
-  		const next = document.activeElement;
-  	if (!next || !next.classList || !next.classList.contains('cell')) {
-    	clearHighlights();
-  	}
-	});
-
-// --------------------------------------------------------------------------------
-// Clear highlights when you click outside the board
-
-cell.addEventListener('blur', () => {
-  const next = document.activeElement;
-  if (!next || !next.classList || !next.classList.contains('cell')) {
-    clearHighlights();
+    document
+      .querySelectorAll(".num-btn")
+      .forEach(button => {
+        button.classList.remove("selected");
+      });
   }
 });
 
@@ -1236,18 +1270,28 @@ navSettings?.addEventListener("click", renderSettings);
               resetMessage(); // don’t spam messages on every correct keystroke
             }
           } else {
-            // WRONG: mark red & deduct a life
             e.target.classList.add("wrong");
-            lives = Math.max(0, lives - 1);
-            renderLives();
+
+            registerMistake(
+              `Row ${r + 1}, Col ${c + 1}`
+            );
 
             if (lives === 0) {
-              setMessage("Wrong number. Lives: 0", "error");
-              gameOver();
+              setMessage(
+                "Wrong number. Lives: 0",
+                "error"
+              );
             } else {
-              setMessage(`Wrong number. ${lives} ${lives === 1 ? "life" : "lives"} left.`, "error");
+              setMessage(
+                `Wrong number. ${lives} ${
+                  lives === 1 ? "life" : "lives"
+                } left.`,
+                "error"
+              );
             }
           }
+
+          
           checkCompletion();
         });
       }
