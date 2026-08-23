@@ -2751,3 +2751,200 @@ body.standard-page > main {
 .home-smart-game .home-board-wrapper {
   background: transparent;
 }
+
+/* =========================================================
+   PRACTICE MODE — NEW RESPONSIVE LAYOUT
+   ========================================================= */
+
+.practice-setup-controls,
+.practice-board-area,
+.practice-game-tools {
+  width: 100%;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* Difficulty + Start */
+
+.practice-setup-controls {
+  margin-bottom: 1rem;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  gap: 0.75rem;
+}
+
+.practice-setup-controls select,
+.practice-setup-controls button {
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* Board */
+
+.practice-board-area {
+  display: flex;
+  justify-content: center;
+}
+
+.practice-board-area .board-wrapper {
+  width: 100%;
+  max-width: 460px;
+
+  margin: 0 auto;
+  padding: 5px;
+
+  box-sizing: border-box;
+}
+
+.practice-board-area #board {
+  width: 100%;
+  max-width: 100%;
+
+  margin: 0 auto;
+}
+
+
+/* Number pad */
+
+.screen > .number-pad {
+  width: 100%;
+  max-width: 460px;
+
+  margin: 0.85rem auto 0;
+  padding: 0;
+}
+
+
+/* Pencil / Erase / Hint / Pause */
+
+.practice-game-tools {
+  margin-top: 0.85rem;
+
+  display: grid;
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 0.55rem;
+}
+
+.practice-game-tools .ui-button {
+  width: 100%;
+  min-width: 0;
+
+  padding: 0.65rem 0.45rem;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   PRACTICE MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+  .page-shell {
+    width: 100%;
+    max-width: 100%;
+
+    padding: 0.75rem;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 100%;
+
+    padding: 1rem;
+
+    box-sizing: border-box;
+  }
+
+
+  /* Lives + Time */
+
+  .status-bar {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 0.65rem;
+  }
+
+  .status-bar .lives,
+  .status-bar .timer {
+    width: 100%;
+
+    padding: 0.65rem;
+
+    text-align: center;
+  }
+
+
+  /* Difficulty + New Puzzle */
+
+  .practice-setup-controls {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 0.6rem;
+  }
+
+
+  /* Board */
+
+  .practice-board-area,
+  .practice-board-area .board-wrapper,
+  .practice-board-area #board {
+    width: 100%;
+    max-width: 100%;
+  }
+
+
+  /* 2 x 2 gameplay controls */
+
+  .practice-game-tools {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 0.6rem;
+
+    width: 100%;
+  }
+
+  .practice-game-tools .ui-button {
+    width: 100%;
+    min-width: 0;
+
+    min-height: 46px;
+
+    padding: 0.7rem 0.5rem;
+
+    font-size: 0.95rem;
+  }
+
+
+  /* Keep number pad contained */
+
+  .screen > .number-pad {
+    width: 100%;
+    max-width: 100%;
+
+    gap: 0.35rem;
+  }
+
+
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+}

@@ -72,34 +72,110 @@
       </section>
 
       <main class="screen">
+
         <div class="status-bar">
-          <div id="lives" class="lives hidden">Lives: 3</div>
-          <button id="hint" class="ui-button hidden" type="button">Hint (3)</button>
-          <div id="timer" class="timer hidden">Time: 00:00</div>
-        </div>
-
-        <div class="main-row">
-          <div id="board-wrapper" class="board-wrapper hidden">
-            <div id="board" class="board"></div>
+          <div id="lives" class="lives hidden">
+            Lives: 3
           </div>
 
-          <div class="side-panel">
-            <label class="visually-hidden" for="difficulty">Choose difficulty</label>
-            <select id="difficulty" class="pill pill-select">
-              <option value="easy">Easy</option>
-              <option value="medium" selected>Medium</option>
-              <option value="hard">Hard</option>
-              <option value="expert">Expert</option>
-            </select>
-
-            <button id="newPuzzle" class="ui-button" type="button">Start Puzzle</button>
-            <button id="pauseResume" class="ui-button hidden" type="button">Pause</button>
-            <button id="eraseCell" class="ui-button hidden" type="button">Erase</button>
-            <button id="pencilToggle" class="ui-button hidden" type="button">Pencil: Off</button>
+          <div id="timer" class="timer hidden">
+            Time: 00:00
           </div>
         </div>
 
-        <div id="number-pad" class="number-pad hidden" aria-label="Sudoku number controls"></div>
+
+        <!-- PRACTICE SETUP -->
+        <div class="practice-setup-controls">
+
+          <label
+            class="visually-hidden"
+            for="difficulty"
+          >
+            Choose difficulty
+          </label>
+
+          <select
+            id="difficulty"
+            class="pill pill-select"
+          >
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+            <option value="expert">Expert</option>
+          </select>
+
+          <button
+            id="newPuzzle"
+            class="ui-button"
+            type="button"
+          >
+            Start Puzzle
+          </button>
+
+        </div>
+
+
+        <!-- BOARD -->
+        <div class="practice-board-area">
+
+          <div
+            id="board-wrapper"
+            class="board-wrapper hidden"
+          >
+            <div
+              id="board"
+              class="board"
+            ></div>
+          </div>
+
+        </div>
+
+
+        <!-- NUMBER PAD -->
+        <div
+          id="number-pad"
+          class="number-pad hidden"
+          aria-label="Sudoku number controls"
+        ></div>
+
+
+        <!-- GAMEPLAY TOOLS -->
+        <div class="practice-game-tools">
+
+          <button
+            id="pencilToggle"
+            class="ui-button hidden"
+            type="button"
+          >
+            Pencil: Off
+          </button>
+
+          <button
+            id="eraseCell"
+            class="ui-button hidden"
+            type="button"
+          >
+            Erase
+          </button>
+
+          <button
+            id="hint"
+            class="ui-button hidden"
+            type="button"
+          >
+            Hint (3)
+          </button>
+
+          <button
+            id="pauseResume"
+            class="ui-button hidden"
+            type="button"
+          >
+            Pause
+          </button>
+
+        </div>
+
         <div id="message" class="message" aria-live="polite">
           Choose a difficulty, then click Start Puzzle.
         </div>

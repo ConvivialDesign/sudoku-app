@@ -4,6 +4,7 @@ import { setSettings as updateSettings} from "./settings.js";
 import { recordGameStarted, recordGameSolved } from "./stats.js";
 import { isDailyMode, completeDailyChallenge } from "./dailyChallenge.js";
 import { createSeededRandom } from "./seededRandom.js";
+import { getDailyPuzzle } from "./dailyPuzzleService.js";
 
 // ---------- State Variables ----------
 let lives = 3;
@@ -221,7 +222,8 @@ let solutionBoard = [
 
 
 // ---------- NEW PUZZLE HANDLER ----------
-function loadGeneratedPuzzle(
+//function loadGeneratedPuzzle(
+async function loadGeneratedPuzzle(
   difficulty,
   shouldRecordStart = false
 ) {
@@ -256,10 +258,87 @@ function loadGeneratedPuzzle(
   /*
     Generate the puzzle immediately.
   */
-  const {
-    puzzle,
-    solution
-  } = generatePuzzle(difficulty);
+    let puzzle;
+    let solution;
+
+    const dailyMode =
+      isDailyMode();
+
+    const dailyDate =
+      localStorage.getItem(
+        "sudoku_daily_date"
+      );
+
+
+    if (
+      dailyMode &&
+      dailyDate
+    ) {
+      const daily =
+        await getDailyPuzzle(
+          dailyDate
+        );
+
+
+      if (daily.success) {
+        puzzle =
+          daily.puzzle;
+
+        solution =
+          daily.solution;
+
+        difficulty =
+          daily.difficulty ||
+          difficulty;
+
+        console.log(
+          `Loaded Daily Challenge from ${daily.source}.`
+        );
+      }
+
+      else {
+        /*
+          EMERGENCY FALLBACK
+
+          If today's server puzzle is unavailable,
+          the existing game still works.
+        */
+
+        console.warn(
+          "Using local Daily Challenge fallback."
+        );
+
+        setupRandomSource();
+
+        const generated =
+          generatePuzzle(
+            difficulty
+          );
+
+        puzzle =
+          generated.puzzle;
+
+        solution =
+          generated.solution;
+      }
+    }
+
+    else {
+      /*
+        Practice Mode stays exactly as it is.
+      */
+
+      const generated =
+        generatePuzzle(
+          difficulty
+        );
+
+      puzzle =
+        generated.puzzle;
+
+      solution =
+        generated.solution;
+    }
 
   initialBoard = puzzle;
   solutionBoard = solution;
@@ -302,7 +381,7 @@ function loadGeneratedPuzzle(
   );
 }
 
-document.getElementById("newPuzzle")?.addEventListener("click", (event) => {
+document.getElementById("newPuzzle")?.addEventListener("click",async event => {
 
   const isDailyStart = event.currentTarget.dataset.dailyStart === "true";
 
@@ -315,7 +394,8 @@ document.getElementById("newPuzzle")?.addEventListener("click", (event) => {
   updateDailyControls();
   
   const diff = document.getElementById("difficulty")?.value || "medium";
-  loadGeneratedPuzzle(diff,true);
+  
+  await loadGeneratedPuzzle(diff,true);
 
   //elapsedSeconds = 0;
   //renderTimer();
