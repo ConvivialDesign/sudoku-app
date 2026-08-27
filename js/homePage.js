@@ -46,6 +46,15 @@ function handleHomepageDailyCompletion(event) {
   const streak =
     getDailyStreak();
 
+  // GA4: Daily Challenge completed
+    trackEvent("daily_challenge_complete", {
+      difficulty: DEFAULT_DAILY_DIFFICULTY,
+      game_type: "daily",
+      completion_time: solveTime || 0,
+      mistakes: mistakes || 0,
+      streak: streak.currentStreak || 0
+    });
+
   celebrateCompletedBoard();
 
   /*
@@ -526,4 +535,10 @@ function celebrateCompletedBoard() {
       "board-completed"
     );
   }, 900);
+}
+
+function trackEvent(eventName, params = {}) {
+  if (typeof gtag === "function") {
+    gtag("event", eventName, params);
+  }
 }

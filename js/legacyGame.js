@@ -17,6 +17,8 @@ let isPaused = false;
 let currentDifficulty = "easy";
 const settings = updateSettings();
 let activeRandom = Math.random;
+// ---------- GA4 GAME TRACKING ----------
+let hasTrackedGameStart = false;
 
 // ---------- Temporary Functions ----------
 function checkAndHandleSolved() {
@@ -240,6 +242,9 @@ async function loadGeneratedPuzzle(
 
   // A new puzzle must be allowed to complete.
   gameCompleted = false;
+
+  // Allow GA4 to record the first real move of this puzzle.
+  hasTrackedGameStart = false;
 
   renderLives(lives);
   renderTimer(elapsedSeconds);
@@ -801,6 +806,23 @@ function handleCellValueChange(cell, r, c, rawVal) {
     return;
   }
 
+  // ---------- GA4: FIRST REAL MOVE ----------
+    if (!hasTrackedGameStart) {
+      hasTrackedGameStart = true;
+
+      if (isDailyMode()) {
+        trackEvent("daily_challenge_start", {
+          difficulty: currentDifficulty,
+          game_type: "daily"
+        });
+      } else {
+        trackEvent("game_start", {
+          difficulty: currentDifficulty,
+          game_type: "practice"
+        });
+      }
+    }
+
   const num = parseInt(val, 10);
   currentBoard[r][c] = num;
 
@@ -1056,6 +1078,16 @@ function finishGame() {
 
   if (gameCompleted) return;
   gameCompleted = true;
+
+  // GA4: Practice puzzle completed
+  if (!isDailyMode()) {
+    trackEvent("game_complete", {
+      difficulty: currentDifficulty,
+      game_type: "practice",
+      completion_time: elapsedSeconds || 0,
+      mistakes: mistakesMade || 0
+    });
+  }
 
   setMessage("✅ Puzzle solved! Great job.", "success"); // use your existing setMessage
   setBoardPaused(true); // optional: lock the board
@@ -1467,6 +1499,12 @@ eraseBtn?.addEventListener("click", () => {
 
   eraseCell(activeCell);
 });
+
+function trackEvent(eventName, params = {}) {
+  if (typeof gtag === "function") {
+    gtag("event", eventName, params);
+  }
+}
 
 export function initLegacyGame() {
   //console.log("🔥 initLegacyGame ran");
