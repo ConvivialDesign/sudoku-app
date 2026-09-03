@@ -40,6 +40,17 @@ function checkAndHandleSolved() {
     }
 
     recordGameSolved(elapsedSeconds, currentDifficulty);
+
+    // GA4: Practice puzzle completed
+    if (!isDailyMode()) {
+      trackEvent("game_complete", {
+        difficulty: currentDifficulty,
+        game_type: "practice",
+        completion_time: elapsedSeconds || 0,
+        mistakes: mistakesMade || 0
+      });
+    }
+
     window.gameInProgress = false;
     return true;
   }
@@ -1080,14 +1091,14 @@ function finishGame() {
   gameCompleted = true;
 
   // GA4: Practice puzzle completed
-  if (!isDailyMode()) {
+  /*if (!isDailyMode()) {
     trackEvent("game_complete", {
       difficulty: currentDifficulty,
       game_type: "practice",
       completion_time: elapsedSeconds || 0,
       mistakes: mistakesMade || 0
     });
-  }
+  }*/
 
   setMessage("✅ Puzzle solved! Great job.", "success"); // use your existing setMessage
   setBoardPaused(true); // optional: lock the board
