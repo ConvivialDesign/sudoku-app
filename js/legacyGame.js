@@ -271,6 +271,10 @@ async function loadGeneratedPuzzle(
     "board-ready"
   );
 
+  window.dispatchEvent(
+  new CustomEvent("sudoku:boardLoading")
+);
+
   /*
     Generate the puzzle immediately.
   */
@@ -378,6 +382,10 @@ async function loadGeneratedPuzzle(
   */
   board?.classList.add(
     "board-ready"
+  );
+
+  window.dispatchEvent(
+  new CustomEvent("sudoku:boardReady")
   );
 
   startTimer();

@@ -2952,3 +2952,48 @@ body.standard-page > main {
 .ad-block {
   display: none;
 }
+
+
+
+.home-board-loading {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.home-board-loading.hidden {
+  display: none;
+}
+
+.home-board-loading-text {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.home-board-loading-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  max-width: 180px;
+  margin: 0 auto;
+}
+
+.home-board-loading-grid span {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.08);
+  animation: sudokuLoadingPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes sudokuLoadingPulse {
+  from {
+    opacity: 0.35;
+  }
+
+  to {
+    opacity: 0.8;
+  }
+}

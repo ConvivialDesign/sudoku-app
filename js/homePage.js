@@ -15,16 +15,29 @@ import {
 
 
 
-const DEFAULT_DAILY_DIFFICULTY = "medium";
+const DEFAULT_DAILY_DIFFICULTY = "easy";
 
 document.addEventListener("DOMContentLoaded", () => {
-  initSettingsUI();
-  initialiseHomepageGame();
+
+
+  window.addEventListener(
+    "sudoku:boardLoading",
+    showHomepageBoardLoading
+  );
+
+  window.addEventListener(
+    "sudoku:boardReady",
+    hideHomepageBoardLoading
+  );
 
   window.addEventListener(
     "sudoku:dailyCompleted",
     handleHomepageDailyCompletion
   );
+
+  initSettingsUI();
+  initialiseHomepageGame();
+
 });
 
 function handleHomepageDailyCompletion(event) {
@@ -131,6 +144,8 @@ function startHomepageDailyChallenge() {
   }
 
   window.currentMode = "daily";
+
+  showHomepageBoardLoading();
 
   startDailyChallenge();
 
@@ -541,4 +556,34 @@ function trackEvent(eventName, params = {}) {
   if (typeof gtag === "function") {
     gtag("event", eventName, params);
   }
+}
+
+function showHomepageBoardLoading() {
+  const loadingMessage =
+    document.getElementById("home-board-loading");
+
+  const board =
+    document.getElementById("board");
+
+  loadingMessage?.classList.remove("hidden");
+  board?.classList.add("hidden");
+
+/*  if (loadingMessage) {
+    loadingMessage.classList.remove("hidden");
+  }*/
+}
+
+function hideHomepageBoardLoading() {
+  const loadingMessage =
+    document.getElementById("home-board-loading");
+
+  const board =
+    document.getElementById("board");
+
+  loadingMessage?.classList.add("hidden");
+  board?.classList.remove("hidden");
+
+  /*if (loadingMessage) {
+    loadingMessage.classList.add("hidden");
+  }*/
 }
