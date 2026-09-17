@@ -299,16 +299,32 @@
 
         </div>
 
-        <!-- LEADERBOARD NAME SETUP -->
-          <!-- Only shown for a player who has not chosen a name yet -->
+        <!-- LEADERBOARD REWARD -->
 
           <div
             id="leaderboard-name-setup"
             class="leaderboard-name-setup hidden"
           >
 
+            <div class="leaderboard-reward-heading">
+              <span
+                class="leaderboard-reward-icon"
+                aria-hidden="true"
+              >
+                🏆
+              </span>
+
+              <div>
+                <h4>Claim Your Place</h4>
+
+                <p>
+                  See how your time compares with today’s players.
+                </p>
+              </div>
+            </div>
+
             <label for="leaderboard-player-name">
-              Choose your leaderboard name
+              Choose a leaderboard name
             </label>
 
             <div class="leaderboard-name-row">
@@ -326,13 +342,13 @@
                 class="button button-primary"
                 type="button"
               >
-                Join Leaderboard
+                Claim My Place
               </button>
 
             </div>
 
             <p class="leaderboard-name-help">
-              You only need to choose a name once.
+              No account required. You only need to choose a name once.
             </p>
 
           </div>
@@ -374,12 +390,33 @@
         ></p>
 
         <a
-          class="text-link"
+          class="button button-secondary"
           href="/leaderboard.html"
         >
-          View today’s leaderboard →
+          🏆 View Today’s Leaderboard →
         </a>
 
+      </div>
+
+      <div
+        id="leaderboard-returning-player"
+        class="leaderboard-returning-player hidden"
+      >
+        <span aria-hidden="true">🏆</span>
+
+        <div>
+          <strong>You’re on today’s leaderboard!</strong>
+          <p>
+            Your Daily Challenge result has been submitted.
+          </p>
+        </div>
+
+        <a
+          class="button button-secondary"
+          href="/leaderboard.html"
+        >
+          See My Ranking
+        </a>
       </div>
 
     </section>

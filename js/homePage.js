@@ -269,62 +269,66 @@ function showCompletedState(todayEntry, streak) {
   const existingPlayerName =
     getSavedPlayerName();
 
+  const returningPlayer =
+    document.getElementById(
+      "leaderboard-returning-player"
+    );
 
   /*
     Returning player:
     the leaderboard name is already saved.
     Keep the name form hidden.
   */
-  if (existingPlayerName) {
-    nameSetup?.classList.add("hidden");
-  }
-
+      if (existingPlayerName) {
+      nameSetup?.classList.add("hidden");
+      returningPlayer?.classList.remove("hidden");
+    }  else {
 
   /*
     First-time leaderboard player:
-    show the name form.
+    hide the returning-player state
+    and show the name form.
   */
-  else {
-    nameSetup?.classList.remove("hidden");
+  returningPlayer?.classList.add("hidden");
 
-    if (nameInput) {
-      nameInput.value = "";
-    }
+  nameSetup?.classList.remove("hidden");
 
-    if (saveNameButton) {
-      saveNameButton.onclick =
-        async () => {
+  if (nameInput) {
+    nameInput.value = "";
+  }
 
-          const enteredName =
-            nameInput?.value || "";
+  if (saveNameButton) {
+    saveNameButton.onclick =
+      async () => {
 
-          const saved =
-            savePlayerName(
-              enteredName
-            );
+        const enteredName =
+          nameInput?.value || "";
 
+        const saved =
+          savePlayerName(
+            enteredName
+          );
 
-          // Invalid name
-          if (!saved.success) {
-            if (shareMessage) {
-              shareMessage.textContent =
-                saved.error;
-            }
-
-            nameInput?.focus();
-
-            return;
-          }
-
-
-          // Prevent multiple taps while submitting
-          saveNameButton.disabled = true;
-          saveNameButton.textContent =
-            "Joining...";
-
+        // Invalid name
+        if (!saved.success) {
           if (shareMessage) {
-            shareMessage.textContent = "";
+            shareMessage.textContent =
+              saved.error;
           }
+
+          nameInput?.focus();
+
+          return;
+        }
+
+        // Prevent multiple taps while submitting
+        saveNameButton.disabled = true;
+        saveNameButton.textContent =
+          "Claiming...";
+
+        if (shareMessage) {
+          shareMessage.textContent = "";
+        }
 
 
           const result =
@@ -344,6 +348,16 @@ function showCompletedState(todayEntry, streak) {
 
 
           if (result.success) {
+
+            if (!result.alreadySubmitted) {
+              trackEvent("leaderboard_join", {
+                game_type: "daily",
+                difficulty: DEFAULT_DAILY_DIFFICULTY,
+                solve_time: todayEntry.solveTime || 0,
+                mistakes: todayEntry.mistakes || 0
+              });
+            }
+
             nameSetup?.classList.add(
               "hidden"
             );
@@ -352,7 +366,7 @@ function showCompletedState(todayEntry, streak) {
               shareMessage.textContent =
                 result.alreadySubmitted
                   ? "Your result is already on today's leaderboard."
-                  : "Your result has been added to today's leaderboard! 🏆";
+                  : "Your place on today's leaderboard has been claimed! 🏆";
             }
 
             window.dispatchEvent(
@@ -373,7 +387,7 @@ function showCompletedState(todayEntry, streak) {
 
             saveNameButton.disabled = false;
             saveNameButton.textContent =
-              "Join Leaderboard";
+              "Claim My Place";
           }
         };
     }
